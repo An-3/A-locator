@@ -1,0 +1,4 @@
+$(function(){
+	$('#UserList').jAutochecklist({
+	}); 
+});

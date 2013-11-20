@@ -14,8 +14,8 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://a-locator.cornhusker.local/';
-
+//$config['base_url']	= 'http://a-locator.cornhusker.local/';
+$config['base_url']	= 'http://'.$_SERVER['HTTP_HOST'].'/';
 /*
 |--------------------------------------------------------------------------
 | Index File
