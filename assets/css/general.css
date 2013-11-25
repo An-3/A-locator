@@ -11,6 +11,27 @@ html, body{
  margin-top: -20px;
  }
 
+
+#modal {
+	width: 900px; /* SET THE WIDTH OF THE MODAL */
+	margin-left: -450px;
+	height: 400px; /* SET THE WIDTH OF THE MODAL */
+}
+
+#modal-body-settings {
+	width: 870px; /* SET THE WIDTH OF THE MODAL */
+	height: 280px; /* SET THE WIDTH OF THE MODAL */
+}
+
+#SettingsTabContent {
+	width: 850px; /* SET THE WIDTH OF THE MODAL */
+	height: 220px; /* SET THE WIDTH OF THE MODAL */
+}
+
+.tab-pane {
+  height: 200px;
+}
+
 .labels {
   color: white;
   background-color: transparent;

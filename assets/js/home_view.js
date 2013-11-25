@@ -1,4 +1,5 @@
-$(function(){
-	$('#UserList').jAutochecklist({
-	}); 
-});
+ $(document).ready(function() {
+    $('.multiselect').multiselect({
+      includeSelectAllOption: true
+    });
+  });
