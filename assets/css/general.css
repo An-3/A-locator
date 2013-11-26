@@ -12,24 +12,30 @@ html, body{
  }
 
 
-#modal {
+#settings-modal {
 	width: 900px; /* SET THE WIDTH OF THE MODAL */
 	margin-left: -450px;
-	height: 400px; /* SET THE WIDTH OF THE MODAL */
+	height: 500px; /* SET THE WIDTH OF THE MODAL */
+}
+
+#friends-modal {
+	width: 900px; /* SET THE WIDTH OF THE MODAL */
+	margin-left: -450px;
+	height: 500px; /* SET THE WIDTH OF THE MODAL */
 }
 
 #modal-body-settings {
 	width: 870px; /* SET THE WIDTH OF THE MODAL */
-	height: 280px; /* SET THE WIDTH OF THE MODAL */
+	height: 380px; /* SET THE WIDTH OF THE MODAL */
 }
 
 #SettingsTabContent {
 	width: 850px; /* SET THE WIDTH OF THE MODAL */
-	height: 220px; /* SET THE WIDTH OF THE MODAL */
+	height: 320px; /* SET THE WIDTH OF THE MODAL */
 }
 
 .tab-pane {
-  height: 200px;
+  height: 300px;
 }
 
 .labels {
