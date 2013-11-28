@@ -66,6 +66,12 @@ class Auth extends Controller {
 			{ //if the login is successful
 				//redirect them back to the home page
 				$this->session->set_flashdata('message', $this->ion_auth->messages());
+				
+				$data = array(
+						'e-mail' =>$this->input->post('email'),
+				);
+				$this->session->set_userdata($data);
+				
 				//redirect($this->config->item('base_url'), 'refresh');
 				redirect('home', 'refresh');
 				

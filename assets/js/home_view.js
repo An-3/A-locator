@@ -41,14 +41,19 @@ $(document).ready(function() {
      $('.label-toggle-switch').bootstrapSwitch('toggleState');
  });
  $('.label-toggle-switch').on('switch-change', function (e, data) {
-     SwitchPositionMode();
+	    //alert(data.value);	 
+	 var postData = {
+			  what : data.value,
+			  where : 'position_mode'
+			};
+	 
+	 $.ajax({
+	     type: "POST",
+	     url: "http://"+ location.hostname + "/index.php/settings/change",
+	     data: postData , //assign the var here
+	     success: function(msg, status){
+	    	 console.log(msg);
+	    	 ;
+	     }
+	});
  });
- 
- function SwitchPositionMode()
- {
-     var someData = '<% = Session["user_id"] ?? "null" %>';
-     if (someData != "null")
-     {
-         alert('<% = Session["user_id"] %>');
-     }
- }
