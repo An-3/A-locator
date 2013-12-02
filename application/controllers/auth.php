@@ -37,8 +37,7 @@ class Auth extends Controller {
 
 			//list the users
 			$this->data['users'] = $this->ion_auth->get_users_array();
-			$this->load->view('auth/index', $this->data);
-			//$this->load->view('indexed');
+			$this->load->view('auth/index', $user);
 		}
 	}
 
@@ -67,14 +66,21 @@ class Auth extends Controller {
 				//redirect them back to the home page
 				$this->session->set_flashdata('message', $this->ion_auth->messages());
 				
+				//add extra info in session
+				/*
 				$data = array(
 						'e-mail' =>$this->input->post('email'),
+						'id' =>$this->ion_auth->user()->row()
 				);
+				*/
+				$data = $this->ion_auth->get_user();				
 				$this->session->set_userdata($data);
 				
-				//redirect($this->config->item('base_url'), 'refresh');
-				redirect('home', 'refresh');
+				$id = $this->session->userdata('id');
+				$user = $this->ion_auth->get_user();
 				
+				redirect('home', 'refresh');
+				//redirect($this->config->item('base_url'), 'refresh');
 			}
 			else
 			{ //if the login was un-successful

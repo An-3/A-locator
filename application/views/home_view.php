@@ -19,6 +19,7 @@
 	<script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/bootstrap-slider.js"></script>
 	<script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/daterangepicker.js"></script>
 	<script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/moment.min.js"></script>
+	<script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/jquery.bootstrap-growl.js"></script>
   </head>
   <body>
   	<div>
@@ -61,27 +62,22 @@
 			<div class="tab-content" id="SettingsTabContent">
 				<div class="tab-pane fade active in" id="position">
 					<p>Определять положение</p>
-				    <div class="label-toggle-switch make-switch" data-on-label="Авто" data-off-label="Руч">
-				        <input type="checkbox" checked />
-				    </div>					
+				    <div id="position_mode" class="label-toggle-switch make-switch" data-on-label="Авто" data-off-label="Руч">
+				        <input type="checkbox"
+					        <?php
+						        if ($position_mode == "1")
+						        {
+						        	echo "checked";
+						        }
+					        ?>
+				        />
+				    </div>
 				</div>
 				<div class="tab-pane fade" id="private">
 					<div class="row">
 						<div class="span4">
-      						<p>Скрыть меня
-								<div id="position-mode-switch" class="make-switch" data-on-label="Да" data-off-label="Нет">
-								    <input type="radio">
-								</div>
-							</p>
-							<p>
-								&nbsp;
-							</p>
-						</div>
-					</div>
-					<div class="row">
-						<div class="span4">
 				        	<p>
-				        		От пользователей
+				        		Скрыть меня от:
 			        		</p>
 			        		<p>
 					        	<select class="multiselect" multiple="multiple">
@@ -108,14 +104,17 @@
 				<div class="tab-pane fade" id="history">
 					<div class="row">
 						<div class="span4">
-      						<p>Вести историю местоположений
-								<div id="position-mode-switch" class="make-switch" data-on-label="Да" data-off-label="Нет">
-								    <input type="radio">
-								</div>
-							</p>
-							<p>
-								&nbsp;
-							</p>
+							<p>Вести историю</p>
+						    <div id="hyst" class="label-toggle-switch make-switch" data-on-label="Да" data-off-label="Нет">
+						        <input type="checkbox"
+							        <?php
+								        if ($hyst == "1")
+								        {
+								        	echo "checked";
+								        }
+							        ?>
+						        />
+						    </div>
 						</div>
 						<div class="span4">
 				        	<p>
@@ -127,7 +126,15 @@
 								    <span><?php echo date("F j, Y", strtotime('-30 day')); ?> - <?php echo date("F j, Y"); ?></span> <b class="caret"></b>
 								</div>
 							</p>
-			        	</div>
+							<p>
+								&nbsp;
+							</p>
+							<p>
+								<div>
+									<button class="btn">Очистить</button>
+								</div>
+							</p>
+						</div>
 					</div>
 					<div class="row">
 						<div class="span4">
@@ -136,7 +143,7 @@
 					</div>
 				</div>
 				<div class="tab-pane fade" id="account">
-					<div class="span5">
+					<div class="span2">
 						<div class="row">
 							<div class="span1">
 								<div class="fileinput fileinput-new" data-provides="fileinput">
@@ -146,6 +153,7 @@
 								    <span class="fileinput-exists">Изменить</span><input type="file" name="..."></span>
 								    <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Удалить</a>
 								  </div>
+								  <img src="<?php echo $this->config->item('base_url'); ?>assets/img/loading.gif" id="loading-indicator" style="display:none" />
 								</div>	
 							</div>
 							<div class="span3">
@@ -158,42 +166,71 @@
 					<div class="span4">
 						<div class="row">
 							<div class="span1">
+								<p>Компания:</p>	
+							</div>
+							<div class="span2">
+								<p>
+									<input type="text" value="<?php echo $company;?>" class='input_edit' name='company' readonly="readonly">										
+								</p>
+							</div>
+						</div>
+						<div class="row">
+							<div class="span1">
+								<p>Телефон:</p>	
+							</div>
+							<div class="span2">
+								<p><input type="text" value="<?php echo $phone;?>" class='input_edit' name='phone' readonly="readonly"></p>	
+							</div>
+						</div>
+						<div class="row">
+							<div class="span1">
+								<p>Слоган:</p>	
+							</div>
+							<div class="span2">
+								<p><input type="text" value="<?php echo $slogan;?>" class='input_edit' name='slogan' readonly="readonly"></p>
+							</div>
+						</div>
+					</div>
+					
+					<div class="span4">
+						<div class="row">
+							<div class="span1">
 								<p>Ник:</p>	
 							</div>
-							<div class="span3">
-								<p><input type="text" class="span3"></p>	
+							<div class="span2">
+								<p><input type="text" value="<?php echo $username;?>" class='input_edit' name='username' readonly="readonly"></p>	
 							</div>
 						</div>
 						<div class="row">
 							<div class="span1">
 								<p>Имя:</p>	
 							</div>
-							<div class="span3">
-								<p><input type="text" class="span3"></p>	
+							<div class="span2">
+								<p><input type="text" value="<?php echo $first_name;?>" class='input_edit' name='first_name' readonly="readonly"></p>
 							</div>
 						</div>
 						<div class="row">
 							<div class="span1">
 								<p>Фамилия:</p>	
 							</div>
-							<div class="span3">
-								<p><input type="text" class="span3"></p>	
+							<div class="span2">
+								<p><input type="text" value="<?php echo $last_name;?>" class='input_edit' name='last_name' readonly="readonly"></p>
 							</div>
 						</div>
 						<div class="row">
 							<div class="span1">
 								<p>Э-почта:</p>	
 							</div>
-							<div class="span3">
-								<p><input type="text" class="span3"></p>	
+							<div class="span2">
+								<p><input type="text" value="<?php echo $email;?>" class='input_edit' name='email' readonly="readonly"></p>	
 							</div>
 						</div>
-						<div class="row">
+						<div class="row" align="right">
 							<div class="span2">
-								<p><button class="btn">Новый пароль</button></p>	
+								<p><input type="text" class="span2" disabled value="******"></p>	
 							</div>
 							<div class="span2">
-								<p><input type="text" class="span2"></p>	
+								<p><button class="btn">Изменить пароль</button></p>	
 							</div>
 						</div>
 						<div class="row">
@@ -239,10 +276,9 @@
 			</div>
 		</div>
 	</div>
-	
-	<script src="<?php echo $this->config->item('base_url'); ?>assets/js/home_view.js"></script>
 	<script src="<?php echo $this->config->item('base_url'); ?>assets/js/jasny-bootstrap.min.js"></script>
     <script src="<?php echo $this->config->item('base_url'); ?>assets/js/bootstrap.min.js"></script>
     <script src="<?php echo $this->config->item('base_url'); ?>assets/js/bootstrap-switch.js"></script>
+    <script src="<?php echo $this->config->item('base_url'); ?>assets/js/home_view.js"></script>
   </body>
 </html>

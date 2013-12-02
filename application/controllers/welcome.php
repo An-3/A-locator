@@ -37,18 +37,18 @@ class Welcome extends CI_Controller {
 		elseif (!$this->ion_auth->is_admin())
 		{
 			//redirect them to the home page because they must be an administrator to view this
-			redirect($this->config->item('base_url'), 'refresh');
+			//redirect($this->config->item('base_url'), 'refresh');
+			redirect('home', 'refresh');
 		}
-		//а иначе, непонятно
+		//а иначе, 
 		else
 		{
 			//set the flash data error message if there is one
 			$this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
-		
 			//list the users
 			$this->data['users'] = $this->ion_auth->get_users_array();
-			$this->load->view('auth/index', $this->data);
-			//$this->load->view('welcome_message');			
+			//$this->load->view('home_view');
+			redirect('home', 'refresh');
 		}
 	}
 }

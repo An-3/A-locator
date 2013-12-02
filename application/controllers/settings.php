@@ -6,6 +6,7 @@ class Settings extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->library('session');
+		$this->load->library('ion_auth');
 	}
 	
 	/**
@@ -15,13 +16,50 @@ class Settings extends CI_Controller {
 	 * @param settings_name $where
 	 * @param value $what
 	 */
-	public function change()
+	public function change($type)
 	{
-		$what = $this->input->post('what');
-		$where = $this->input->post('where');
+		$value = $this->input->post('value');
+		$name = $this->input->post('name');
 		
-		$identity = $this->session->userdata('e-mail');
-						
-		var_dump($identity);
+		switch ($type) {
+			case "switch":
+				if ($value == "true")
+				{
+					$value = 1;
+				} else 
+				{
+					$value = 0;
+				}
+			break;
+			
+			case "input":
+				;
+			break;
+			
+			default:
+				;
+			break;
+		}
+
+
+		$data = array(
+				$name => $value,
+		);
+		
+		$id = $this->session->userdata('id');
+		$this->ion_auth->update_user($id, $data);
+		$messages = $this->ion_auth->messages();
+		echo $messages;
+	}
+	
+	public function chane_input()
+	{
+		
+	}
+	
+	public function get()
+	{
+		$id = $this->session->userdata('id');
+		$user = $this->ion_auth->get_user();
 	}
 }

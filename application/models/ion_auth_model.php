@@ -897,8 +897,9 @@ class Ion_auth_model extends CI_Model
 	 **/
 	public function update_user($id, $data)
 	{
+		//get current user
 	    $user = $this->get_user($id)->row();
-
+	    
 	    $this->db->trans_begin();
 
 	    if (array_key_exists($this->identity_column, $data) && $this->identity_check($data[$this->identity_column]) && $user->{$this->identity_column} !== $data[$this->identity_column])
@@ -910,12 +911,14 @@ class Ion_auth_model extends CI_Model
 
 	    if (!empty($this->columns))
 	    {
+	    	
 			//filter the data passed by the columns in the config
 			$meta_fields = array();
 			foreach ($this->columns as $field)
 			{
 				if (is_array($data) && isset($data[$field]))
 				{
+					
 				$meta_fields[$field] = $data[$field];
 				unset($data[$field]);
 				}

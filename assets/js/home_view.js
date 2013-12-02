@@ -1,25 +1,17 @@
-function get_cookie ( cookie_name )
-{
-  var results = document.cookie.match ( '(^|;) ?' + cookie_name + '=([^;]*)(;|$)' );
- 
-  if ( results )
-    return ( unescape ( results[2] ) );
-  else
-    return null;
-}
-
+//Multiselect init
 $(document).ready(function() {
     $('.multiselect').multiselect({
       includeSelectAllOption: true
     });
-  });
+});
  
- $('#foo').slider()
- .on('slide', function(ev){
+//Slider init
+$('#foo').slider().on('slide', function(ev){
     $('#bar').val(ev.value);
- });
+});
  
- $('#reportrange').daterangepicker(
+ //Clandar init
+$('#reportrange').daterangepicker(
 		    {
 		      ranges: {
 		         'Сегодня': [moment(), moment()],
@@ -37,23 +29,62 @@ $(document).ready(function() {
 		    }
 		);
  
- $('#label-toggle-switch').on('click', function(e, data) {
-     $('.label-toggle-switch').bootstrapSwitch('toggleState');
- });
+ 
+ //Change switches
  $('.label-toggle-switch').on('switch-change', function (e, data) {
-	    //alert(data.value);	 
-	 var postData = {
-			  what : data.value,
-			  where : 'position_mode'
-			};
-	 
+		var type = "switch";
+		var postData = {
+				  value : data.value,
+				  name : this.id
+				};
+	    change_settings(postData, type);
+ });
+ 
+ //Click on inputs
+ $('.input_edit').on('click', function (e, data) {
+	 $(this).removeAttr('readonly');
+ });
+ //Change inputs
+ $('.input_edit').on('change', function (e, data) {
+	 	var name = this.name;
+	 	var value = this.value;
+	 	var type = "input";
+	    var postData = {
+				  value : value,
+				  name : name
+				};
+	    //alert(name + value + type);
+	    change_settings(postData, type);
+
+	    $('[name="' + name + '"]').prop("readonly",true);
+ });
+ //Leave inputs
+ $('.input_edit').on('blur', function (e, data) {
+	 $(this).prop("readonly",true);
+ });
+ 
+ //
+ //Changing function
+ //
+ function change_settings(postData, type) {
 	 $.ajax({
 	     type: "POST",
-	     url: "http://"+ location.hostname + "/index.php/settings/change",
-	     data: postData , //assign the var here
+	     url: "http://"+ location.hostname + "/index.php/settings/change/" + type,
+	     data: postData ,
 	     success: function(msg, status){
 	    	 console.log(msg);
-	    	 ;
+    	     $.bootstrapGrowl(msg, { type: 'success',
+	    	     ele: 'body', 
+	    	     align: 'center',
+	    	     delay: 200
+	    	    	 });
+	     },
+	     error: function (msg, status){
+    	     $.bootstrapGrowl(msg, { type: 'error',
+	    	     ele: 'body', 
+	    	     align: 'center',
+	    	     delay: 4000
+	    	    	 });
 	     }
 	});
- });
+}

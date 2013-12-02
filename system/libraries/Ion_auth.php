@@ -650,6 +650,7 @@ class Ion_auth
 	{
 		if ($this->ci->ion_auth_model->update_user($id, $data))
 		{
+			//var_dump($data);
 			$this->set_message('update_successful');
 			return TRUE;
 		}
