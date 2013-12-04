@@ -47,9 +47,3 @@ html, body{
   width: 100px;
   white-space: nowrap;
 }
-
-#loading-indicator {
-  position: absolute;
-  left: 10px;
-  top: 10px;
-}

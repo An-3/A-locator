@@ -62,4 +62,24 @@ class Settings extends CI_Controller {
 		$id = $this->session->userdata('id');
 		$user = $this->ion_auth->get_user();
 	}
+	
+	public function upload(){
+	
+		$config['upload_path'] = "/application/uploads/";
+		$config['allowed_types'] = "jpg|jpeg|png|bmp|tiff";
+		$config['max_size']	= 2048;
+		$config['max_width'] = 150;
+		$config['max_height'] = 100;
+		$config['encrypt_name'] = TRUE;
+	
+		$this->load->library('upload', $config);
+	
+		if ($this->upload->do_upload() == false) {
+			$error = array('error' => $this->upload->display_errors());
+			echo json_encode($error);
+		}else{
+			$data = $this->upload->data();
+			echo json_encode($data);
+		}
+	}
 }

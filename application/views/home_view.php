@@ -9,8 +9,10 @@
     <link href="<?php echo $this->config->item('base_url'); ?>assets/css/slider.css" rel="stylesheet">
     <link href="<?php echo $this->config->item('base_url'); ?>assets/css/daterangepicker-bs2.css" rel="stylesheet">
     <link href="<?php echo $this->config->item('base_url'); ?>assets/css/general.css" rel="stylesheet">
+    <link href="<?php echo $this->config->item('base_url'); ?>assets/css/jquery.fileupload.css" rel="stylesheet">
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
+	
 	<script src="<?php echo $this->config->item('base_url'); ?>assets/js/jquery-latest.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
     <script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/markerwithlabel.js"></script>
@@ -20,6 +22,8 @@
 	<script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/daterangepicker.js"></script>
 	<script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/moment.min.js"></script>
 	<script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/jquery.bootstrap-growl.js"></script>
+
+	
   </head>
   <body>
   	<div>
@@ -145,22 +149,25 @@
 				<div class="tab-pane fade" id="account">
 					<div class="span2">
 						<div class="row">
-							<div class="span1">
-								<div class="fileinput fileinput-new" data-provides="fileinput">
-								  <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 128px; height: 128px;"></div>
-								  <div>
-								    <span class="btn btn-default btn-file"><span class="fileinput-new">Выбрать</span>
-								    <span class="fileinput-exists">Изменить</span><input type="file" name="..."></span>
-								    <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Удалить</a>
-								  </div>
-								  <img src="<?php echo $this->config->item('base_url'); ?>assets/img/loading.gif" id="loading-indicator" style="display:none" />
-								</div>	
+							<div class="fileinput fileinput-new" data-provides="fileinput">
+							  <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 150px; height: 100px;"></div>
+							  <div>
+							    <span class="btn btn-default btn-file">
+							    	<span class="fileinput-new">
+							    		<i class="icon-folder-open"></i>
+						    		</span>
+							    	<span class="fileinput-exists">
+							    		<i class="icon-folder-open"></i>
+						    		</span>
+							    	<input type="file" name="...">
+						    	</span>
+							    <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">
+							    	<i class="icon-remove"></i>
+						    	</a>
+							  </div>
 							</div>
-							<div class="span3">
-								
-							</div>
+							<input class="span2" id="fileupload" type="file" name="files[]" data-url="<?php echo $this->config->item('base_url'); ?>assets/php/index.php">					
 						</div>
-
 					</div>
 					
 					<div class="span4">
@@ -168,7 +175,7 @@
 							<div class="span1">
 								<p>Компания:</p>	
 							</div>
-							<div class="span2">
+							<div class="span1">
 								<p>
 									<input type="text" value="<?php echo $company;?>" class='input_edit' name='company' readonly="readonly">										
 								</p>
@@ -178,7 +185,7 @@
 							<div class="span1">
 								<p>Телефон:</p>	
 							</div>
-							<div class="span2">
+							<div class="span1">
 								<p><input type="text" value="<?php echo $phone;?>" class='input_edit' name='phone' readonly="readonly"></p>	
 							</div>
 						</div>
@@ -186,7 +193,7 @@
 							<div class="span1">
 								<p>Слоган:</p>	
 							</div>
-							<div class="span2">
+							<div class="span1">
 								<p><input type="text" value="<?php echo $slogan;?>" class='input_edit' name='slogan' readonly="readonly"></p>
 							</div>
 						</div>
@@ -197,7 +204,7 @@
 							<div class="span1">
 								<p>Ник:</p>	
 							</div>
-							<div class="span2">
+							<div class="span1">
 								<p><input type="text" value="<?php echo $username;?>" class='input_edit' name='username' readonly="readonly"></p>	
 							</div>
 						</div>
@@ -205,7 +212,7 @@
 							<div class="span1">
 								<p>Имя:</p>	
 							</div>
-							<div class="span2">
+							<div class="span1">
 								<p><input type="text" value="<?php echo $first_name;?>" class='input_edit' name='first_name' readonly="readonly"></p>
 							</div>
 						</div>
@@ -213,7 +220,7 @@
 							<div class="span1">
 								<p>Фамилия:</p>	
 							</div>
-							<div class="span2">
+							<div class="span1">
 								<p><input type="text" value="<?php echo $last_name;?>" class='input_edit' name='last_name' readonly="readonly"></p>
 							</div>
 						</div>
@@ -221,7 +228,7 @@
 							<div class="span1">
 								<p>Э-почта:</p>	
 							</div>
-							<div class="span2">
+							<div class="span1">
 								<p><input type="text" value="<?php echo $email;?>" class='input_edit' name='email' readonly="readonly"></p>	
 							</div>
 						</div>
@@ -229,12 +236,12 @@
 							<div class="span2">
 								<p><input type="text" class="span2" disabled value="******"></p>	
 							</div>
-							<div class="span2">
+							<div class="span1">
 								<p><button class="btn">Изменить пароль</button></p>	
 							</div>
 						</div>
 						<div class="row">
-							<div class="span4">
+							<div class="span1">
 								<p>&nbsp;</p>	
 							</div>
 						</div>
@@ -280,5 +287,9 @@
     <script src="<?php echo $this->config->item('base_url'); ?>assets/js/bootstrap.min.js"></script>
     <script src="<?php echo $this->config->item('base_url'); ?>assets/js/bootstrap-switch.js"></script>
     <script src="<?php echo $this->config->item('base_url'); ?>assets/js/home_view.js"></script>
-  </body>
+    
+    <script src="<?php echo $this->config->item('base_url'); ?>assets/js/jquery.ui.widget.js"></script>
+	<script src="<?php echo $this->config->item('base_url'); ?>assets/js/jquery.iframe-transport.js"></script>
+	<script src="<?php echo $this->config->item('base_url'); ?>assets/js/jquery.fileupload.js"></script>
+</body>
 </html>

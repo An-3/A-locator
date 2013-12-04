@@ -62,6 +62,7 @@ $('#reportrange').daterangepicker(
  $('.input_edit').on('blur', function (e, data) {
 	 $(this).prop("readonly",true);
  });
+
  
  //
  //Changing function
@@ -88,3 +89,15 @@ $('#reportrange').daterangepicker(
 	     }
 	});
 }
+ 
+ $(function () {
+	    $('#fileupload').fileupload({
+	        dataType: 'json',
+	        done: function (e, data) {
+	            $.each(data.result.files, function (index, file) {
+	                $('<p/>').text(file.name).appendTo(document.body);
+	                alert(file.name)
+	            });
+	        }
+	    });
+	});
