@@ -3,6 +3,8 @@ $(document).ready(function() {
     $('.multiselect').multiselect({
       includeSelectAllOption: true
     });
+    
+    
 });
  
 //Slider init
@@ -96,8 +98,21 @@ $('#reportrange').daterangepicker(
 	        done: function (e, data) {
 	            $.each(data.result.files, function (index, file) {
 	                $('<p/>').text(file.name).appendTo(document.body);
-	                alert(file.name)
+	                
+	                $.bootstrapGrowl("Файл " + file.name + "успешно загружен", { type: 'success',
+	   	    	     ele: 'body', 
+	   	    	     align: 'center',
+	   	    	     delay: 200
+	   	    	    	 });
 	            });
-	        }
+	        },
+	    
+		    progressall: function (e, data) {
+		        var progress = parseInt(data.loaded / data.total * 100, 10);
+		        $('#progress .bar').css(
+		            'width',
+		            progress + '%'
+		        );
+		    }
 	    });
 	});

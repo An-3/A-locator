@@ -150,7 +150,7 @@
 					<div class="span2">
 						<div class="row">
 							<div class="fileinput fileinput-new" data-provides="fileinput">
-							  <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 150px; height: 100px;"></div>
+							  <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 150px; height: 120px;"></div>
 							  <div>
 							    <span class="btn btn-default btn-file">
 							    	<span class="fileinput-new">
@@ -159,14 +159,16 @@
 							    	<span class="fileinput-exists">
 							    		<i class="icon-folder-open"></i>
 						    		</span>
-							    	<input type="file" name="...">
+							    	<input class="span2" id="fileupload" type="file" name="files[]" data-url="<?php echo $this->config->item('base_url'); ?>assets/php/index.php">
 						    	</span>
 							    <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">
 							    	<i class="icon-remove"></i>
 						    	</a>
 							  </div>
+							</div>						
+						<div id="progress">
+							    <div class="bar" style="width: 0%;"></div>
 							</div>
-							<input class="span2" id="fileupload" type="file" name="files[]" data-url="<?php echo $this->config->item('base_url'); ?>assets/php/index.php">					
 						</div>
 					</div>
 					
