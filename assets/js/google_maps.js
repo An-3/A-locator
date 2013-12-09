@@ -24,7 +24,7 @@
 	                                       position.coords.longitude);	      
 	      map.setCenter(pos);
 		  var pictureLabel = document.createElement("img");
-		  pictureLabel.src = "http://"+ location.hostname + "/assets/img/users/an-3.png";
+		  pictureLabel.src = "http://"+ location.hostname + "/assets/img/userpics/thumbnail/1lRCK0L.jpg";
 		  var marker = new MarkerWithLabel({
 		       position: pos,
 		       map: map,

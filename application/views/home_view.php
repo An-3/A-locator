@@ -2,6 +2,8 @@
 <html>
   <head>
     <title>А-локатор</title>
+    
+    <?php $this->load->helper('form');?>
     <link href="<?php echo $this->config->item('base_url'); ?>assets/css/jasny-bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo $this->config->item('base_url'); ?>assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo $this->config->item('base_url'); ?>assets/css/bootstrap-switch.css" rel="stylesheet">
@@ -9,7 +11,8 @@
     <link href="<?php echo $this->config->item('base_url'); ?>assets/css/slider.css" rel="stylesheet">
     <link href="<?php echo $this->config->item('base_url'); ?>assets/css/daterangepicker-bs2.css" rel="stylesheet">
     <link href="<?php echo $this->config->item('base_url'); ?>assets/css/general.css" rel="stylesheet">
-    <link href="<?php echo $this->config->item('base_url'); ?>assets/css/jquery.fileupload.css" rel="stylesheet">
+    <link href="<?php echo $this->config->item('base_url'); ?>assets/css/jquery.fileupload.css" rel="stylesheet">	
+    
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
 	
@@ -42,7 +45,7 @@
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-cog"></i> <b class="caret"></b></a>
 					<ul class="dropdown-menu">
 						<li><a href=#friends-modal role="button" data-toggle="modal">Пригласить друга</a></li>
-						<li><a href=#settings-modal role="button" data-toggle="modal">Настройки</a></li>
+						<li id="button-settings"><a href=#settings-modal role="button" data-toggle="modal">Настройки</a></li>
 						<li><a href="<?php echo $this->config->item('base_url');?>index.php/auth/logout">Выход</a></li>
 					</ul>
 					</li>
@@ -67,14 +70,7 @@
 				<div class="tab-pane fade active in" id="position">
 					<p>Определять положение</p>
 				    <div id="position_mode" class="label-toggle-switch make-switch" data-on-label="Авто" data-off-label="Руч">
-				        <input type="checkbox"
-					        <?php
-						        if ($position_mode == "1")
-						        {
-						        	echo "checked";
-						        }
-					        ?>
-				        />
+				        <input type="checkbox"/>
 				    </div>
 				</div>
 				<div class="tab-pane fade" id="private">
@@ -98,10 +94,10 @@
 							<p>
 								Временно на
 							</p>
-							<input type="text" id="foo" class="span2" value="" data-slider-min="1" data-slider-max="60" data-slider-step="1" data-slider-value="-14" data-slider-orientation="horizontal" data-slider-selection="after"data-slider-tooltip="hide">
+							<input type="text" id="hide_period_slider" class="span2" value="" data-slider-min="1" data-slider-max="60" data-slider-step="1" data-slider-value="-14" data-slider-orientation="horizontal" data-slider-selection="after"data-slider-tooltip="hide">
 							<br>
 							<br>
-							<input type="text" id="bar"> мин
+							<input type="text" id="hide_period"> мин
 						</div>
 					</div>
 				</div>
@@ -110,14 +106,7 @@
 						<div class="span4">
 							<p>Вести историю</p>
 						    <div id="hyst" class="label-toggle-switch make-switch" data-on-label="Да" data-off-label="Нет">
-						        <input type="checkbox"
-							        <?php
-								        if ($hyst == "1")
-								        {
-								        	echo "checked";
-								        }
-							        ?>
-						        />
+						        <input type="checkbox"/>
 						    </div>
 						</div>
 						<div class="span4">
@@ -150,7 +139,9 @@
 					<div class="span2">
 						<div class="row">
 							<div class="fileinput fileinput-new" data-provides="fileinput">
-							  <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 150px; height: 120px;"></div>
+							  <div class="fileinput-preview thumbnail" style="width: 150px; height: 120px;">
+							  	<img alt="" id="userpic" src="">
+							  </div>
 							  <div>
 							    <span class="btn btn-default btn-file">
 							    	<span class="fileinput-new">
@@ -159,17 +150,15 @@
 							    	<span class="fileinput-exists">
 							    		<i class="icon-folder-open"></i>
 						    		</span>
-							    	<input class="span2" id="fileupload" type="file" name="files[]" data-url="<?php echo $this->config->item('base_url'); ?>assets/php/index.php">
+							    	<input class="span2" id="fileupload" type="file" name="files[]" data-url="<?php echo $this->config->item('base_url'); ?>index.php/upload" multipart>
 						    	</span>
 							    <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">
 							    	<i class="icon-remove"></i>
 						    	</a>
 							  </div>
-							</div>						
-						<div id="progress">
-							    <div class="bar" style="width: 0%;"></div>
 							</div>
 						</div>
+						
 					</div>
 					
 					<div class="span4">
@@ -179,7 +168,7 @@
 							</div>
 							<div class="span1">
 								<p>
-									<input type="text" value="<?php echo $company;?>" class='input_edit' name='company' readonly="readonly">										
+									<input type="text" value="обновляется..." class='input_edit' name='company' id="company" readonly="readonly">										
 								</p>
 							</div>
 						</div>
@@ -188,7 +177,7 @@
 								<p>Телефон:</p>	
 							</div>
 							<div class="span1">
-								<p><input type="text" value="<?php echo $phone;?>" class='input_edit' name='phone' readonly="readonly"></p>	
+								<p><input type="text" value="обновляется..." class='input_edit' name='phone' id="phone" readonly="readonly"></p>	
 							</div>
 						</div>
 						<div class="row">
@@ -196,7 +185,7 @@
 								<p>Слоган:</p>	
 							</div>
 							<div class="span1">
-								<p><input type="text" value="<?php echo $slogan;?>" class='input_edit' name='slogan' readonly="readonly"></p>
+								<p><input type="text" value="обновляется..." class='input_edit' name='slogan' id="slogan" readonly="readonly"></p>
 							</div>
 						</div>
 					</div>
@@ -207,7 +196,7 @@
 								<p>Ник:</p>	
 							</div>
 							<div class="span1">
-								<p><input type="text" value="<?php echo $username;?>" class='input_edit' name='username' readonly="readonly"></p>	
+								<p><input type="text" value="обновляется..." class='input_edit' name='username' id='username' readonly="readonly"></p>	
 							</div>
 						</div>
 						<div class="row">
@@ -215,7 +204,7 @@
 								<p>Имя:</p>	
 							</div>
 							<div class="span1">
-								<p><input type="text" value="<?php echo $first_name;?>" class='input_edit' name='first_name' readonly="readonly"></p>
+								<p><input type="text" value="обновляется..." class='input_edit' name='first_name' id='first_name' readonly="readonly"></p>
 							</div>
 						</div>
 						<div class="row">
@@ -223,7 +212,7 @@
 								<p>Фамилия:</p>	
 							</div>
 							<div class="span1">
-								<p><input type="text" value="<?php echo $last_name;?>" class='input_edit' name='last_name' readonly="readonly"></p>
+								<p><input type="text" value="обновляется..." class='input_edit' name='last_name' id='last_name' readonly="readonly"></p>
 							</div>
 						</div>
 						<div class="row">
@@ -231,15 +220,15 @@
 								<p>Э-почта:</p>	
 							</div>
 							<div class="span1">
-								<p><input type="text" value="<?php echo $email;?>" class='input_edit' name='email' readonly="readonly"></p>	
+								<p><input type="text" value="обновляется..." class='input_edit' name='email' id='email' readonly="readonly"></p>	
 							</div>
 						</div>
 						<div class="row" align="right">
-							<div class="span2">
-								<p><input type="text" class="span2" disabled value="******"></p>	
+							<div class="span1">
+								<p>Пароль:</p>	
 							</div>
 							<div class="span1">
-								<p><button class="btn">Изменить пароль</button></p>	
+								<p><input class='input_edit' class="span2" name='password' type="password" readonly="readonly" value="******"></p>	
 							</div>
 						</div>
 						<div class="row">

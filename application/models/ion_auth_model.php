@@ -263,7 +263,7 @@ class Ion_auth_model extends CI_Model
 	 * @return bool
 	 * @author Mathew
 	 **/
-	public function change_password($identity, $old, $new)
+	public function change_password($identity, $new)
 	{
 	    $query = $this->db->select('password, salt')
 			      ->where($this->identity_column, $identity)
@@ -274,12 +274,11 @@ class Ion_auth_model extends CI_Model
 	    $result = $query->row();
 
 	    $db_password = $result->password;
-	    $old	 = $this->hash_password_db($identity, $old);
+	    //$old	 = $this->hash_password_db($identity, $old);
 	    $new	 = $this->hash_password($new, $result->salt);
 
-	    if ($db_password === $old)
-	    {
-	    	//store the new password and reset the remember code so all remembered instances have to re-login
+	    
+    	//store the new password and reset the remember code so all remembered instances have to re-login
 		$data = array(
 			    'password' => $new,
 			    'remember_code' => '',
@@ -289,9 +288,6 @@ class Ion_auth_model extends CI_Model
 		$this->db->update($this->tables['users'], $data, array($this->identity_column => $identity));
 
 		return $this->db->affected_rows() == 1;
-	    }
-
-	    return FALSE;
 	}
 
 	/**

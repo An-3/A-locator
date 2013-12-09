@@ -1,17 +1,38 @@
-//Multiselect init
 $(document).ready(function() {
     $('.multiselect').multiselect({
       includeSelectAllOption: true
     });
-    
-    
+
+    $(function () {
+	    $('#fileupload').fileupload({
+	        dataType: 'json',
+	        done: function (e, data) {
+	            $.each(data.result.files, function (index, file) {
+	                $('<p/>').text(file.name).appendTo(document.body);
+		    	     $.bootstrapGrowl("Файл "+ file.name + " успешно загружен", { type: 'success',
+			    	     ele: 'body',
+			    	     align: 'center',
+			    	     delay: 300
+			    	    	 });
+	            });
+	        },
+	        error: function (e, data) {
+	    	     $.bootstrapGrowl("Ошибка: " + e + " , " + data, { type: 'error',
+		    	     ele: 'body',
+		    	     align: 'center',
+		    	     delay: 300
+		    	    	 });
+	    	     console.log(e);
+	        },
+	    });
+	});
 });
- 
+
 //Slider init
-$('#foo').slider().on('slide', function(ev){
-    $('#bar').val(ev.value);
+$('#hide_period_slider').slider().on('slide', function(ev){
+    $('#hide_period').val(ev.value);
 });
- 
+
  //Clandar init
 $('#reportrange').daterangepicker(
 		    {
@@ -42,9 +63,18 @@ $('#reportrange').daterangepicker(
 	    change_settings(postData, type);
  });
  
+ //Change switches
+ $('#button-settings').on('click', function (e, data) {
+	 get_settings();
+ });
+ 
  //Click on inputs
  $('.input_edit').on('click', function (e, data) {
 	 $(this).removeAttr('readonly');
+	 if (this.name == "password") 
+	 {
+		 this.type = "text";
+	 }
  });
  //Change inputs
  $('.input_edit').on('change', function (e, data) {
@@ -63,8 +93,11 @@ $('#reportrange').daterangepicker(
  //Leave inputs
  $('.input_edit').on('blur', function (e, data) {
 	 $(this).prop("readonly",true);
- });
-
+	 if (this.name == "password") 
+	 {
+		 $(this).prop("type","password");
+	 }
+ }); 
  
  //
  //Changing function
@@ -79,7 +112,7 @@ $('#reportrange').daterangepicker(
     	     $.bootstrapGrowl(msg, { type: 'success',
 	    	     ele: 'body', 
 	    	     align: 'center',
-	    	     delay: 200
+	    	     delay: 300
 	    	    	 });
 	     },
 	     error: function (msg, status){
@@ -92,27 +125,45 @@ $('#reportrange').daterangepicker(
 	});
 }
  
- $(function () {
-	    $('#fileupload').fileupload({
-	        dataType: 'json',
-	        done: function (e, data) {
-	            $.each(data.result.files, function (index, file) {
-	                $('<p/>').text(file.name).appendTo(document.body);
-	                
-	                $.bootstrapGrowl("Файл " + file.name + "успешно загружен", { type: 'success',
-	   	    	     ele: 'body', 
-	   	    	     align: 'center',
-	   	    	     delay: 200
-	   	    	    	 });
-	            });
-	        },
-	    
-		    progressall: function (e, data) {
-		        var progress = parseInt(data.loaded / data.total * 100, 10);
-		        $('#progress .bar').css(
-		            'width',
-		            progress + '%'
-		        );
-		    }
-	    });
-	});
+ //
+ //Changing function
+ //
+ function get_settings() {
+     var switches = ["position_mode", "hyst"];
+     var inputs = ["hide_period", "company", "phone", "slogan", "username", "first_name", "last_name", "email"];
+     var images = ["userpic"];
+     var value;
+		 $.getJSON("http://"+ location.hostname + "/index.php/settings/get", function(data) {  
+	         $.each(data, function(key, val) {   
+	            console.log( key + " = " + val);
+	         });
+	         
+	         //console.log("position mode = " + data["position_mode"]);
+	     switches.forEach(function(entry) {
+	    	 value = data[entry];
+			if (value == 0)
+				{
+				value = false;
+				}
+			else
+				{
+				value = true;
+				}
+			$('#' + entry).bootstrapSwitch('setState', value);
+    	 });
+	     
+	     inputs.forEach(function(entry) {
+	    	 value = data[entry];
+	    	 $('#' + entry).prop("value",value);
+	     	}
+		 );
+	     
+	     images.forEach(function(entry) {
+	    	 value = data[entry];
+	    	 $('#' + entry).prop("value",value);
+	    	 $("#userpic").attr("src","http://"+ location.hostname + "/assets/img/userpics/"+ value);
+	     	}
+		 );
+	     
+     });
+}

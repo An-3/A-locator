@@ -10,7 +10,7 @@
  * http://www.opensource.org/licenses/MIT
  */
 
-class UploadHandler
+class CI_UploadHandler
 {
 
     protected $options;

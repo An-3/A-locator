@@ -166,9 +166,9 @@ class Ion_auth
 	 * @return void
 	 * @author Mathew
 	 **/
-	public function change_password($identity, $old, $new)
+	public function change_password($identity, $new)
 	{
-		if ($this->ci->ion_auth_model->change_password($identity, $old, $new))
+		if ($this->ci->ion_auth_model->change_password($identity, $new))
 		{
 			$this->set_message('password_change_successful');
 			return TRUE;

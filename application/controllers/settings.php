@@ -18,11 +18,16 @@ class Settings extends CI_Controller {
 	 */
 	public function change($type)
 	{
-		$value = $this->input->post('value');
-		$name = $this->input->post('name');
-		
+
+		$id = $this->session->userdata('id');
+		$user = $this->ion_auth->get_user($this->session->userdata('user_id'));
+		$identity = $this->session->userdata($this->config->item('identity', 'ion_auth'));
+
 		switch ($type) {
 			case "switch":
+				$value = $this->input->post('value');
+				$name = $this->input->post('name');
+
 				if ($value == "true")
 				{
 					$value = 1;
@@ -30,56 +35,45 @@ class Settings extends CI_Controller {
 				{
 					$value = 0;
 				}
+				$data = array(
+						$name => $value,
+				); 
+				$this->ion_auth->update_user($id, $data);
 			break;
 			
 			case "input":
-				;
+				$value = $this->input->post('value');
+				$name = $this->input->post('name');
+				$data = array(
+						$name => $value,
+				);
+				$this->ion_auth->update_user($id, $data);
+			break;
+			
+			case "password":
+				$change = $this->ion_auth->change_password($identity, $this->input->post('new'));
+				if ($change)
+				{ //if the password was successfully changed
+				$this->session->set_flashdata('message', $this->ion_auth->messages());
+				}
+				else
+				{
+					$this->session->set_flashdata('message', $this->ion_auth->errors());
+				}
 			break;
 			
 			default:
 				;
 			break;
 		}
-
-
-		$data = array(
-				$name => $value,
-		);
-		
-		$id = $this->session->userdata('id');
-		$this->ion_auth->update_user($id, $data);
 		$messages = $this->ion_auth->messages();
 		echo $messages;
 	}
-	
-	public function chane_input()
-	{
 		
-	}
-	
 	public function get()
 	{
 		$id = $this->session->userdata('id');
 		$user = $this->ion_auth->get_user();
-	}
-	
-	public function upload(){
-	
-		$config['upload_path'] = "/application/uploads/";
-		$config['allowed_types'] = "jpg|jpeg|png|bmp|tiff";
-		$config['max_size']	= 2048;
-		$config['max_width'] = 150;
-		$config['max_height'] = 100;
-		$config['encrypt_name'] = TRUE;
-	
-		$this->load->library('upload', $config);
-	
-		if ($this->upload->do_upload() == false) {
-			$error = array('error' => $this->upload->display_errors());
-			echo json_encode($error);
-		}else{
-			$data = $this->upload->data();
-			echo json_encode($data);
-		}
+	    echo json_encode($user);
 	}
 }
