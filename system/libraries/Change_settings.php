@@ -84,10 +84,12 @@ class Change_settings {
 		);
 		$this->ci->ion_auth->update_user($id, $data);
 		$path_to_file = "assets/img/userpics/".$userpic;
+		$path_to_file_thumb = "assets/img/userpics/thumbnail/".$userpic;
 		
 		if ($userpic != $value)
 		{
 			unlink($path_to_file);
+			unlink($path_to_file_thumb);
 		}
 	}
 }

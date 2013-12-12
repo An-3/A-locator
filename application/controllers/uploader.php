@@ -7,8 +7,11 @@ class Uploader extends CI_Controller {
 		$this->load->library('session');
 		$this->load->library('ion_auth');
 		$this->load->library('change_settings');
+		$this->load->library('image_lib');
 		
-		$config['upload_path'] = 'assets/img/userpics/';
+		$path = 'assets/img/userpics/';
+		
+		$config['upload_path'] = $path;
 		$config['allowed_types'] = "jpg|jpeg|png|gif";
 		$config['max_size']	= 12048;
 		$config['max_width'] = 8000;
@@ -50,14 +53,43 @@ class Uploader extends CI_Controller {
 			
 			//Image Resizing
 			$config['maintain_ratio'] = true;
-			$this->load->library('image_lib', $config);
+			$this->image_lib->initialize($config);
 			
 			if ( ! $this->image_lib->resize()){
 				$this->session->set_flashdata('message', $this->image_lib->display_errors('', ''));
 			}			
 			//Update profile
 			$this->change_settings->change("userpic", "userpic", $data['file_name']);
+			unset($config);
+			$this->image_lib->clear();
+			
+			//Make thumbnail
+			$this->make_thumb($path,$this->upload->upload_path.$this->upload->file_name);
+			
 			echo json_encode($data);
 		}	
+	}
+	
+	public function make_thumb($path, $file)
+	{
+		$this->load->library('image_lib');
+		$path_thumb = $path.'thumbnail/';
+		
+		$config2['upload_path'] = 'assets/img/userpics/thumbnail/';
+		$config2['new_image'] = $path_thumb;
+		$config2['allowed_types'] = "jpg|jpeg|png|gif";
+		$config2['max_size']	= 12048;
+		$config2['max_width'] = 8000;
+		$config2['max_height'] = 6000;
+		$config2['encrypt_name'] = false;
+		$config2['source_image'] = $file;
+		$config2['width'] = '48';
+		$config2['height'] = '48';
+		
+		$this->image_lib->initialize($config2);
+		if ( ! $this->image_lib->resize()){
+			$this->session->set_flashdata('message', $this->image_lib->display_errors('', ''));
+		}
+
 	}
 }
