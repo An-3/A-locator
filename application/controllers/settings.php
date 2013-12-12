@@ -5,8 +5,9 @@ class Settings extends CI_Controller {
 	function __construct()
 	{
 		parent::__construct();
-		$this->load->library('session');
 		$this->load->library('ion_auth');
+		$this->load->library('change_settings');
+		$this->load->library('session');
 	}
 	
 	/**
@@ -16,64 +17,26 @@ class Settings extends CI_Controller {
 	 * @param settings_name $where
 	 * @param value $what
 	 */
-	public function change($type)
-	{
 
-		$id = $this->session->userdata('id');
-		$user = $this->ion_auth->get_user($this->session->userdata('user_id'));
-		$identity = $this->session->userdata($this->config->item('identity', 'ion_auth'));
-
-		switch ($type) {
-			case "switch":
-				$value = $this->input->post('value');
-				$name = $this->input->post('name');
-
-				if ($value == "true")
-				{
-					$value = 1;
-				} else 
-				{
-					$value = 0;
-				}
-				$data = array(
-						$name => $value,
-				); 
-				$this->ion_auth->update_user($id, $data);
-			break;
-			
-			case "input":
-				$value = $this->input->post('value');
-				$name = $this->input->post('name');
-				$data = array(
-						$name => $value,
-				);
-				$this->ion_auth->update_user($id, $data);
-			break;
-			
-			case "password":
-				$change = $this->ion_auth->change_password($identity, $this->input->post('new'));
-				if ($change)
-				{ //if the password was successfully changed
-				$this->session->set_flashdata('message', $this->ion_auth->messages());
-				}
-				else
-				{
-					$this->session->set_flashdata('message', $this->ion_auth->errors());
-				}
-			break;
-			
-			default:
-				;
-			break;
-		}
-		$messages = $this->ion_auth->messages();
-		echo $messages;
-	}
 		
 	public function get()
 	{
 		$id = $this->session->userdata('id');
 		$user = $this->ion_auth->get_user();
-	    echo json_encode($user);
+		echo json_encode($user);
 	}
+	
+	public function change($type)
+	{	
+		$value = $this->input->post('value');
+		$name = $this->input->post('name');
+		echo $this->change_settings->change($type, $name, $value);
+	}
+	
+	public function clear_userpic()
+	{
+		echo $this->change_settings->clear_userpic();
+	}
+	
+	
 }

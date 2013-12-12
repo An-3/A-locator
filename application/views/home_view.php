@@ -25,14 +25,18 @@
 	<script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/daterangepicker.js"></script>
 	<script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/moment.min.js"></script>
 	<script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/jquery.bootstrap-growl.js"></script>
-
+    <script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/jquery.ui.widget.js"></script>	
+	<script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/jquery.fileupload.js"></script>
+	<script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/jquery.fileupload-process.js"></script>
+	<script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/jquery.iframe-transport.js"></script>
+	<script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/upload.js"></script>
 	
   </head>
   <body>
   	<div>
 		<div class="navbar">
 			<nav class="navbar-inner">
-				<a class="brand">А-локатор</a>
+				<a class="brand"><img src="<?php echo $this->config->item('base_url'); ?>assets/img/a-locator_logo.png" height="22" width="22"> А-локатор</a>
 				<ul class="nav">
 					<li class="divider-vertical"></li>
 					<li><a href="#">Все друзья</a></li>
@@ -137,26 +141,24 @@
 				</div>
 				<div class="tab-pane fade" id="account">
 					<div class="span2">
+
+					
+
 						<div class="row">
-							<div class="fileinput fileinput-new" data-provides="fileinput">
-							  <div class="fileinput-preview thumbnail" style="width: 150px; height: 120px;">
-							  	<img alt="" id="userpic" src="">
+							  <div class="fileinput-preview thumbnail" style="width: 150px; height: 120px; line-height: 120px">
+							  	<img alt="" id="userpic" src="" width="120">
 							  </div>
-							  <div>
-							    <span class="btn btn-default btn-file">
-							    	<span class="fileinput-new">
-							    		<i class="icon-folder-open"></i>
-						    		</span>
-							    	<span class="fileinput-exists">
-							    		<i class="icon-folder-open"></i>
-						    		</span>
-							    	<input class="span2" id="fileupload" type="file" name="files[]" data-url="<?php echo $this->config->item('base_url'); ?>index.php/upload" multipart>
-						    	</span>
-							    <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">
-							    	<i class="icon-remove"></i>
-						    	</a>
-							  </div>
-							</div>
+							<?php echo form_open_multipart('/uploader', array('id' => 'fileuploader')); ?>
+				            <button  type="button" class="btn">
+					            <span class="fileinput-button">
+					                <span><i class="icon-folder-open"></i></span>
+					                <input type="file" name="userfile" multiple>
+					            </span>
+				            </button>
+          		            <button  type="button" class="btn" id="clear_userpic">
+				                <i class="icon-remove"></i>
+				            </button>
+							<?php echo form_close(); ?>
 						</div>
 						
 					</div>
@@ -188,7 +190,16 @@
 								<p><input type="text" value="обновляется..." class='input_edit' name='slogan' id="slogan" readonly="readonly"></p>
 							</div>
 						</div>
+						<div class="row">
+							<div class="span1">
+								<p>Э-почта:</p>	
+							</div>
+							<div class="span1">
+								<p><input type="text" value="обновляется..." class='input_edit' name='email' id='email' readonly="readonly"></p>	
+							</div>
+						</div>
 					</div>
+					
 					
 					<div class="span4">
 						<div class="row">
@@ -213,14 +224,6 @@
 							</div>
 							<div class="span1">
 								<p><input type="text" value="обновляется..." class='input_edit' name='last_name' id='last_name' readonly="readonly"></p>
-							</div>
-						</div>
-						<div class="row">
-							<div class="span1">
-								<p>Э-почта:</p>	
-							</div>
-							<div class="span1">
-								<p><input type="text" value="обновляется..." class='input_edit' name='email' id='email' readonly="readonly"></p>	
 							</div>
 						</div>
 						<div class="row" align="right">
@@ -278,9 +281,5 @@
     <script src="<?php echo $this->config->item('base_url'); ?>assets/js/bootstrap.min.js"></script>
     <script src="<?php echo $this->config->item('base_url'); ?>assets/js/bootstrap-switch.js"></script>
     <script src="<?php echo $this->config->item('base_url'); ?>assets/js/home_view.js"></script>
-    
-    <script src="<?php echo $this->config->item('base_url'); ?>assets/js/jquery.ui.widget.js"></script>
-	<script src="<?php echo $this->config->item('base_url'); ?>assets/js/jquery.iframe-transport.js"></script>
-	<script src="<?php echo $this->config->item('base_url'); ?>assets/js/jquery.fileupload.js"></script>
 </body>
 </html>

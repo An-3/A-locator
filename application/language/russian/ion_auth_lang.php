@@ -46,6 +46,3 @@ $lang['update_successful'] 		 	 = 'Учетная запись успешно о
 $lang['update_unsuccessful'] 		 	 = 'Невозможно обновить учетную запись';
 $lang['delete_successful'] 		 	 = 'Учетная запись удалена';
 $lang['delete_unsuccessful'] 		 	 = 'Невозможно удалить учетную запись';
-
-
-?>

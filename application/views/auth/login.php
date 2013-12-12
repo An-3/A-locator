@@ -14,24 +14,29 @@
     </style>
   </head>
   <body>
+
+  	
 	<div class="container">
-	
-	<h2>Пожалуйста, введите адрес своей электропочты и пароль</h2>		
-	<?php echo form_open("auth/login");?>
-      <p>
-      	<label for="email">Электропочта:</label>
-      	<?php echo form_input($email);?>
-      </p>      
-      <p>
-      	<label for="password">Пароль:</label>
-      	<?php echo form_input($password);?>
-      </p>
-      <p>
-	      <label for="remember">Помнить меня:</label>
-	      <?php echo form_checkbox('remember', '1', FALSE);?>
-	  </p>
-      <p><?php echo form_submit('submit', 'Войти');?></p>
-    <?php echo form_close();?>
+	  	<div class="row">
+	    	<div class="span12 pagination-centered">
+	    	<p> <h2><img src="<?php echo $this->config->item('base_url'); ?>assets/img/a-locator_logo.png" height="32" width="32"> Пожалуйста, введите адрес своей электропочты и пароль</h2></p>
+	   		</div>
+   			<?php echo form_open("auth/login");?>
+		      <p>
+		      	<label for="email">Электропочта:</label>
+		      	<?php echo form_input($email);?>
+		      </p>      
+		      <p>
+		      	<label for="password">Пароль:</label>
+		      	<?php echo form_input($password);?>
+		      </p>
+		      <p>
+			      <label for="remember">Помнить меня:</label>
+			      <?php echo form_checkbox('remember', '1', FALSE);?>
+			  </p>
+		      <p><?php echo form_submit('submit', 'Войти');?></p>
+		    <?php echo form_close();?>
+   		</div>	
 	</div> 
     <script src="<?php echo $this->config->item('base_url'); ?>assets/js/jquery-latest.js"></script>
     <script src="<?php echo $this->config->item('base_url'); ?>assets/js/bootstrap.min.js"></script>

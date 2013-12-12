@@ -3,37 +3,54 @@ $(document).ready(function() {
       includeSelectAllOption: true
     });
 
-    $(function () {
-	    $('#fileupload').fileupload({
-	        dataType: 'json',
-	        done: function (e, data) {
-	            $.each(data.result.files, function (index, file) {
-	                $('<p/>').text(file.name).appendTo(document.body);
-		    	     $.bootstrapGrowl("Файл "+ file.name + " успешно загружен", { type: 'success',
-			    	     ele: 'body',
-			    	     align: 'center',
-			    	     delay: 300
-			    	    	 });
-	            });
-	        },
-	        error: function (e, data) {
-	    	     $.bootstrapGrowl("Ошибка: " + e + " , " + data, { type: 'error',
+    $('#clear_userpic').on('click', function (e, data) {
+   	 clear_userpic();
+   });
+    
+    $('#fileuploader').fileupload({
+        dataType: 'json',
+        progressall: function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            $('.progress .bar').css('width', progress + '%'); },
+        done: function (e, data) {
+            if(data.result.error != undefined){
+            $('#error').html(data.result.error); // выводим на страницу сообщение об ошибке если оно есть        
+            $('#error').fadeIn('slow');
+            }else{
+                 $('#error').hide(); //на случай если сообщение об ошибке уже отображалось
+                 $('#files').append("<img class='img-polaroid' style='margin-left:15%;padding:10px;width:auto;height:250px' src=''>");
+                 $('#success').fadeIn('slow');
+                }
+            },
+   	     success: function(msg, status){
+	    	 console.log(msg);
+    	     $.bootstrapGrowl("Файл " + msg.orig_name + " успешно загружен", { type: 'success',
+	    	     ele: 'body', 
+	    	     align: 'center',
+	    	     delay: 300
+	    	    	 });
+    	     $('#userpic').attr('src', "http://"+ location.hostname + "/assets/img/userpics/"+ msg.file_name);
+	     },
+        error: function (e, data) {
+	    	     $.bootstrapGrowl("Ошибка: " + e.responseText, { type: 'error',
 		    	     ele: 'body',
 		    	     align: 'center',
-		    	     delay: 300
+		    	     delay: 3000,
+		    	     width: 600
 		    	    	 });
 	    	     console.log(e);
-	        },
-	    });
-	});
+            
+        }
+    });
 });
+
 
 //Slider init
 $('#hide_period_slider').slider().on('slide', function(ev){
     $('#hide_period').val(ev.value);
 });
 
- //Clandar init
+ //Calendar init
 $('#reportrange').daterangepicker(
 		    {
 		      ranges: {
@@ -52,7 +69,11 @@ $('#reportrange').daterangepicker(
 		    }
 		);
  
- 
+//Load settings
+$('#button-settings').on('click', function (e, data) {
+	 get_settings();
+});
+
  //Change switches
  $('.label-toggle-switch').on('switch-change', function (e, data) {
 		var type = "switch";
@@ -61,11 +82,6 @@ $('#reportrange').daterangepicker(
 				  name : this.id
 				};
 	    change_settings(postData, type);
- });
- 
- //Change switches
- $('#button-settings').on('click', function (e, data) {
-	 get_settings();
  });
  
  //Click on inputs
@@ -126,44 +142,72 @@ $('#reportrange').daterangepicker(
 }
  
  //
- //Changing function
+ //Loading settings
  //
  function get_settings() {
      var switches = ["position_mode", "hyst"];
      var inputs = ["hide_period", "company", "phone", "slogan", "username", "first_name", "last_name", "email"];
      var images = ["userpic"];
      var value;
-		 $.getJSON("http://"+ location.hostname + "/index.php/settings/get", function(data) {  
-	         $.each(data, function(key, val) {   
-	            console.log( key + " = " + val);
-	         });
-	         
-	         //console.log("position mode = " + data["position_mode"]);
-	     switches.forEach(function(entry) {
-	    	 value = data[entry];
-			if (value == 0)
-				{
-				value = false;
-				}
-			else
-				{
-				value = true;
-				}
-			$('#' + entry).bootstrapSwitch('setState', value);
-    	 });
-	     
-	     inputs.forEach(function(entry) {
-	    	 value = data[entry];
-	    	 $('#' + entry).prop("value",value);
-	     	}
-		 );
-	     
-	     images.forEach(function(entry) {
-	    	 value = data[entry];
-	    	 $('#' + entry).prop("value",value);
-	    	 $("#userpic").attr("src","http://"+ location.hostname + "/assets/img/userpics/"+ value);
-	     	}
-		 );
-	     
+     $.getJSON("http://"+ location.hostname + "/index.php/settings/get", function(data) {  
+     $.each(data, function(key, val) {   
+        console.log( key + " = " + val);
      });
+         
+         //console.log("position mode = " + data["position_mode"]);
+     switches.forEach(function(entry) {
+	     value = data[entry];
+	        if (value == 0)
+	                {
+	                value = false;
+	                }
+	        else
+	                {
+	                value = true;
+	                }
+	        $('#' + entry).bootstrapSwitch('setState', value);
+     });
+     
+     inputs.forEach(function(entry) {
+             value = data[entry];
+             $('#' + entry).prop("value",value);
+             }
+         );
+     
+     images.forEach(function(entry) {
+             value = data[entry];
+             $('#' + entry).prop("value",value);
+             $("#userpic").attr("src","http://"+ location.hostname + "/assets/img/userpics/"+ value);
+             }
+         );
+             
+     });
+}
+ 
+ function clear_userpic() {
+	var postData = {
+			  value : "",
+			  name : ""
+			};
+	 $.ajax({
+	     type: "POST",
+	     url: "http://"+ location.hostname + "/index.php/settings/clear_userpic/",
+	     data: postData ,
+	     success: function(msg, status){
+	    	 console.log(msg);
+    	     $.bootstrapGrowl("Юзерпик очищен", { type: 'success',
+	    	     ele: 'body', 
+	    	     align: 'center',
+	    	     delay: 300
+	    	    	 });
+    	     $("#userpic").attr("src","http://"+ location.hostname + "/assets/img/userpics/default.png");
+	     },
+	     error: function (msg, status){
+    	     $.bootstrapGrowl(msg, { type: 'error',
+	    	     ele: 'body', 
+	    	     align: 'center',
+	    	     delay: 4000
+	    	    	 });
+	     }
+	});
 }

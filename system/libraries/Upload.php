@@ -107,7 +107,7 @@ class CI_Upload {
 							'client_name'		=> ''
 						);
 
-
+		
 		foreach ($defaults as $key => $val)
 		{
 			if (isset($config[$key]))
@@ -127,6 +127,7 @@ class CI_Upload {
 				$this->$key = $val;
 			}
 		}
+		
 
 		// if a file_name was provided in the config, use it instead of the user input
 		// supplied file name for all uploads until initialized again
@@ -142,7 +143,7 @@ class CI_Upload {
 	 */
 	public function do_upload($field = 'userfile')
 	{
-
+	
 	// Is $_FILES[$field] set? If not, no reason to continue.
 		if ( ! isset($_FILES[$field]))
 		{
@@ -153,6 +154,7 @@ class CI_Upload {
 		// Is the upload path valid?
 		if ( ! $this->validate_upload_path())
 		{
+			
 			// errors will already be set by validate_upload_path() so just return FALSE
 			return FALSE;
 		}
@@ -698,7 +700,7 @@ class CI_Upload {
 	 * @return	bool
 	 */
 	public function validate_upload_path()
-	{
+	{		
 		if ($this->upload_path == '')
 		{
 			$this->set_error('upload_no_filepath');
