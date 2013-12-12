@@ -146,7 +146,7 @@
 
 						<div class="row">
 							  <div class="fileinput-preview thumbnail" style="width: 150px; height: 120px; line-height: 120px">
-							  	<img alt="" id="userpic" src="" width="120">
+							  	<img alt="" id="userpic" src="" >
 							  </div>
 							<?php echo form_open_multipart('/uploader', array('id' => 'fileuploader')); ?>
 				            <button  type="button" class="btn">

@@ -34,6 +34,10 @@ html, body{
 	height: 320px; /* SET THE WIDTH OF THE MODAL */
 }
 
+#userpic {
+	height: 120px;
+}
+
 .tab-pane {
   height: 300px;
 }
