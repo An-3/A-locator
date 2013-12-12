@@ -11,35 +11,39 @@ $(document).ready(function() {
         dataType: 'json',
         progressall: function (e, data) {
             var progress = parseInt(data.loaded / data.total * 100, 10);
-            $('.progress .bar').css('width', progress + '%'); },
+            $('#progress .bar').css(
+                'width',
+                progress + '%'
+            );
+        },
         done: function (e, data) {
-            if(data.result.error != undefined){
-            $('#error').html(data.result.error); // выводим на страницу сообщение об ошибке если оно есть        
-            $('#error').fadeIn('slow');
-            }else{
-                 $('#error').hide(); //на случай если сообщение об ошибке уже отображалось
-                 $('#files').append("<img class='img-polaroid' style='margin-left:15%;padding:10px;width:auto;height:250px' src=''>");
-                 $('#success').fadeIn('slow');
-                }
+        	;
             },
    	     success: function(msg, status){
-	    	 console.log(msg);
-    	     $.bootstrapGrowl("Файл " + msg.orig_name + " успешно загружен", { type: 'success',
-	    	     ele: 'body', 
-	    	     align: 'center',
-	    	     delay: 300
-	    	    	 });
-    	     $('#userpic').attr('src', "http://"+ location.hostname + "/assets/img/userpics/"+ msg.file_name);
-	     },
-        error: function (e, data) {
-	    	     $.bootstrapGrowl("Ошибка: " + e.responseText, { type: 'error',
+   	    	$('#progress').hide();
+	    	 if(msg['error']){
+	    	     $.bootstrapGrowl("Ошибка: " + msg['error'], { type: 'error',
 		    	     ele: 'body',
 		    	     align: 'center',
 		    	     delay: 3000,
 		    	     width: 600
 		    	    	 });
-	    	     console.log(e);
-            
+	    	 } else {
+	    	     $.bootstrapGrowl("Файл " + msg.orig_name + " успешно загружен", { type: 'success',
+		    	     ele: 'body', 
+		    	     align: 'center',
+		    	     delay: 300
+		    	    	 });
+	    	     $('#userpic').attr('src', "http://"+ location.hostname + "/assets/img/userpics/"+ msg.file_name);	    		 
+	    	 }
+	     },
+        error: function (e, data) {
+	     $.bootstrapGrowl("Ошибка: " + e.responseText, { type: 'error',
+    	     ele: 'body',
+    	     align: 'center',
+    	     delay: 3000,
+    	     width: 600
+    	    	 });
         }
     });
 });
@@ -124,7 +128,6 @@ $('#button-settings').on('click', function (e, data) {
 	     url: "http://"+ location.hostname + "/index.php/settings/change/" + type,
 	     data: postData ,
 	     success: function(msg, status){
-	    	 console.log(msg);
     	     $.bootstrapGrowl(msg, { type: 'success',
 	    	     ele: 'body', 
 	    	     align: 'center',
@@ -151,7 +154,7 @@ $('#button-settings').on('click', function (e, data) {
      var value;
      $.getJSON("http://"+ location.hostname + "/index.php/settings/get", function(data) {  
      $.each(data, function(key, val) {   
-        console.log( key + " = " + val);
+        //console.log( key + " = " + val);
      });
          
          //console.log("position mode = " + data["position_mode"]);
@@ -194,7 +197,6 @@ $('#button-settings').on('click', function (e, data) {
 	     url: "http://"+ location.hostname + "/index.php/settings/clear_userpic/",
 	     data: postData ,
 	     success: function(msg, status){
-	    	 console.log(msg);
     	     $.bootstrapGrowl("Юзерпик очищен", { type: 'success',
 	    	     ele: 'body', 
 	    	     align: 'center',

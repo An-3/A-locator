@@ -37,7 +37,18 @@ html, body{
 #userpic {
 	height: 120px;
 }
+#progress {
+	margin-bottom: -20px;
+}
 
+.bar {
+    height: 18px;
+    background: green;
+    margin-top: -25px;
+	z-index: 10;
+	position: relative;
+	width: 160px;  
+}
 .tab-pane {
   height: 300px;
 }

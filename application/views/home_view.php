@@ -147,6 +147,9 @@
 						<div class="row">
 							  <div class="fileinput-preview thumbnail" style="width: 150px; height: 120px; line-height: 120px">
 							  	<img alt="" id="userpic" src="" >
+								<div id="progress">
+								    <div class="bar" style="width: 0%;"></div>
+								</div>
 							  </div>
 							<?php echo form_open_multipart('/uploader', array('id' => 'fileuploader')); ?>
 				            <button  type="button" class="btn">
@@ -160,7 +163,6 @@
 				            </button>
 							<?php echo form_close(); ?>
 						</div>
-						
 					</div>
 					
 					<div class="span4">
