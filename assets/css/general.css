@@ -62,3 +62,7 @@ html, body{
   width: 100px;
   white-space: nowrap;
 }
+
+.input_edit {
+	width: 180px;
+}

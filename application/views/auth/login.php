@@ -19,7 +19,7 @@
 	<div class="container">
 	  	<div class="row">
 	    	<div class="span12 pagination-centered">
-	    	<p> <h2><img src="<?php echo $this->config->item('base_url'); ?>assets/img/a-locator_logo.png" height="32" width="32"> Пожалуйста, введите адрес своей электропочты и пароль</h2></p>
+	    	<p> <h2><img src="<?php echo $this->config->item('base_url'); ?>assets/img/a-locator_logo.png" width="64"> Пожалуйста, введите адрес своей электропочты и пароль</h2></p>
 	   		</div>
    			<?php echo form_open("auth/login");?>
 		      <p>

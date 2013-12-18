@@ -29,14 +29,13 @@
 	<script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/jquery.fileupload.js"></script>
 	<script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/jquery.fileupload-process.js"></script>
 	<script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/jquery.iframe-transport.js"></script>
-	<script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/upload.js"></script>
 	
   </head>
   <body>
   	<div>
 		<div class="navbar">
 			<nav class="navbar-inner">
-				<a class="brand"><img src="<?php echo $this->config->item('base_url'); ?>assets/img/a-locator_logo.png" height="22" width="22"> А-локатор</a>
+				<a class="brand"><img src="<?php echo $this->config->item('base_url'); ?>assets/img/a-locator_logo.png" width="32"> А-локатор</a>
 				<ul class="nav">
 					<li class="divider-vertical"></li>
 					<li><a href="#">Все друзья</a></li>
@@ -141,11 +140,8 @@
 				</div>
 				<div class="tab-pane fade" id="account">
 					<div class="span2">
-
-					
-
 						<div class="row">
-							  <div class="fileinput-preview thumbnail" style="width: 150px; height: 120px; line-height: 120px">
+							  <div class="fileinput-preview thumbnail" style="width: 120px; height: 120px; line-height: 120px">
 							  	<img alt="" id="userpic" src="" >
 								<div id="progress">
 								    <div class="bar" style="width: 0%;"></div>
@@ -168,12 +164,10 @@
 					<div class="span4">
 						<div class="row">
 							<div class="span1">
-								<p>Компания:</p>	
+								Компания:	
 							</div>
 							<div class="span1">
-								<p>
-									<input type="text" value="обновляется..." class='input_edit' name='company' id="company" readonly="readonly">										
-								</p>
+								<input plac type="text" value="обновляется..." class='input_edit' name='company' id="company" readonly="readonly">
 							</div>
 						</div>
 						<div class="row">

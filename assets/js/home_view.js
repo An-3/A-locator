@@ -46,6 +46,8 @@ $(document).ready(function() {
     	    	 });
         }
     });
+    
+    active_user();
 });
 
 
@@ -111,7 +113,7 @@ $('#button-settings').on('click', function (e, data) {
 	    $('[name="' + name + '"]').prop("readonly",true);
  });
  //Leave inputs
- $('.input_edit').on('blur', function (e, data) {
+ $('.input_edit').focusout(function(){
 	 $(this).prop("readonly",true);
 	 if (this.name == "password") 
 	 {
@@ -128,14 +130,14 @@ $('#button-settings').on('click', function (e, data) {
 	     url: "http://"+ location.hostname + "/index.php/settings/change/" + type,
 	     data: postData ,
 	     success: function(msg, status){
-    	     $.bootstrapGrowl(msg, { type: 'success',
+    	     $.bootstrapGrowl("OK " + msg, { type: 'success',
 	    	     ele: 'body', 
 	    	     align: 'center',
 	    	     delay: 300
 	    	    	 });
 	     },
 	     error: function (msg, status){
-    	     $.bootstrapGrowl(msg, { type: 'error',
+    	     $.bootstrapGrowl("NOT OK: " + msg, { type: 'error',
 	    	     ele: 'body', 
 	    	     align: 'center',
 	    	     delay: 4000
@@ -152,39 +154,38 @@ $('#button-settings').on('click', function (e, data) {
      var inputs = ["hide_period", "company", "phone", "slogan", "username", "first_name", "last_name", "email"];
      var images = ["userpic"];
      var value;
-     $.getJSON("http://"+ location.hostname + "/index.php/settings/get", function(data) {  
-     $.each(data, function(key, val) {   
-        //console.log( key + " = " + val);
-     });
-         
-         //console.log("position mode = " + data["position_mode"]);
-     switches.forEach(function(entry) {
-	     value = data[entry];
-	        if (value == 0)
-	                {
-	                value = false;
-	                }
-	        else
-	                {
-	                value = true;
-	                }
-	        $('#' + entry).bootstrapSwitch('setState', value);
-     });
      
-     inputs.forEach(function(entry) {
-             value = data[entry];
-             $('#' + entry).prop("value",value);
-             }
-         );
      
-     images.forEach(function(entry) {
-             value = data[entry];
-             $('#' + entry).prop("value",value);
-             $("#userpic").attr("src","http://"+ location.hostname + "/assets/img/userpics/"+ value);
-             }
-         );
-             
-     });
+     $.ajax({
+    	    url: "http://"+ location.hostname + "/index.php/settings/get",
+    	    dataType : "json",
+    	    success: function (data, textStatus) { // вешаем свой обработчик на функцию success
+    		     switches.forEach(function(entry) {
+    			     value = data[entry];
+    			        if (value == 0)
+    			                {
+    			                value = false;
+    			                }
+    			        else
+    			                {
+    			                value = true;
+    			                }
+    			        $('#' + entry).bootstrapSwitch('setState', value);
+    		     });
+    	     
+    		     inputs.forEach(function(entry) {
+    		             value = data[entry];
+    		             $('#' + entry).prop("value",value);
+    	         });
+    	     
+    		     images.forEach(function(entry) {
+    		             value = data[entry];
+    		             $('#' + entry).prop("value",value);
+    		             $("#userpic").attr("src","http://"+ location.hostname + "/assets/img/userpics/"+ value);
+    		     });
+    	    }               
+    	});
+     
 }
  
  function clear_userpic() {
@@ -213,3 +214,13 @@ $('#button-settings').on('click', function (e, data) {
 	     }
 	});
 }
+ 
+ function active_user() {
+	//get userpic
+	
+	//get position_mode
+	 
+	 //set userpic
+	 //alert("heer");
+	 $("#active_user").attr("src","http://"+ location.hostname + "/assets/img/userpics/default.png");
+ }

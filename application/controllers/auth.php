@@ -67,17 +67,19 @@ class Auth extends Controller {
 				$this->session->set_flashdata('message', $this->ion_auth->messages());
 				
 				//add extra info in session
-				/*
+				$user = $this->ion_auth->get_user_by_email($this->input->post('email'));
+				
 				$data = array(
 						'e-mail' =>$this->input->post('email'),
-						'id' =>$this->ion_auth->user()->row()
+						//'id' =>$this->ion_auth->user()->row()
+						'id' =>$user->id
 				);
-				*/
-				$data = $this->ion_auth->get_user();				
+				
+				//$data = $this->ion_auth->get_user();				
 				$this->session->set_userdata($data);
 				
 				$id = $this->session->userdata('id');
-				$user = $this->ion_auth->get_user();
+				
 				
 				redirect('home', 'refresh');
 				//redirect($this->config->item('base_url'), 'refresh');

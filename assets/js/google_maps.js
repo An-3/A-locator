@@ -24,14 +24,17 @@
 	                                       position.coords.longitude);	      
 	      map.setCenter(pos);
 		  var pictureLabel = document.createElement("img");
-		  pictureLabel.src = "http://"+ location.hostname + "/assets/img/userpics/thumbnail/1lRCK0L.jpg";
+		  pictureLabel.id = "active_user";
+		  pictureLabel.width = "42";
+		  pictureLabel.height = "42";
+		  pictureLabel.src = "http://"+ location.hostname + "/assets/img/userpics/default.png";
 		  var marker = new MarkerWithLabel({
 		       position: pos,
 		       map: map,
 		       draggable: false,
 		       raiseOnDrag: true,
 		       labelContent: pictureLabel,
-		       labelAnchor: new google.maps.Point(51, 50),
+		       labelAnchor: new google.maps.Point(50, 65),
 		       labelClass: "labels", // the CSS class for the label
 		       labelStyle: {opacity: 1.0}
 		     });		  
