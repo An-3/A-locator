@@ -23,21 +23,20 @@
 		<form class="form-signin">
         	<p>
 				<ul class="nav nav-pills">
-					<li class="active">
-				    	<a href="#">Вход</a>
-					</li>
 					<li>
-				  		<a href="registration">Регистрация</a>
+				    	<a href="login">Вход</a>
+					</li>
+					<li class="active">
+				  		<a href="#">Регистрация</a>
 			  		</li>
 				</ul>
 			</p>
 	        <input type="text" class="input-block-level" placeholder="Электропочта">
 	        <input type="password" class="input-block-level" placeholder="Пароль">
-	        <label class="checkbox">
-				<input type="checkbox" value="remember-me"> Помнить меня
-        	</label>
+	        <input type="password" class="input-block-level" placeholder="Инвайт">
         	<button class="btn btn-large btn-primary" type="submit">Войти</button>
 		</form>
+
     </div>
 
 

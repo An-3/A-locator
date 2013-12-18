@@ -41,6 +41,24 @@ class Auth extends Controller {
 		}
 	}
 
+	//register new user
+	function registration()
+	{
+		$this->data['title'] = "Register";
+		
+		if ($this->ion_auth->logged_in())
+		{
+			//already logged in so no need to access this page
+			redirect($this->config->item('base_url'), 'refresh');
+		}
+		
+		//validate form input
+		$this->form_validation->set_rules('email', 'Email Address', 'required|valid_email');
+		$this->form_validation->set_rules('password', 'Password', 'required');
+		
+		$this->load->view('auth/registration');
+	}	
+	
 	//log the user in
 	function login()
 	{
