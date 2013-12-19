@@ -2,6 +2,13 @@
 
 class Change_settings {
 	
+	/**
+	 * CodeIgniter global
+	 *
+	 * @var string
+	 **/
+	protected $ci;
+	
 	public function __construct()
 	{
 		$this->ci =& get_instance();

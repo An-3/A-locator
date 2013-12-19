@@ -16,31 +16,43 @@
     </style>
   </head>
   <body>
-    <div class="container">
-		<div class="span12 pagination-centered">
-    		<p><h2><img src="<?php echo $this->config->item('base_url'); ?>assets/img/a-locator_logo.png" width="32"> А-локатор</h2></p>
-   		</div>
-		<form class="form-signin">
-        	<p>
+	<div class="row">
+		<div id="infoMessage"><?php echo $message;?></div>
+		<br>
+	</div>
+		<div class="container pagination-centered">
+			<div class=" pagination-centered">
+	    		<p><h2><img src="<?php echo $this->config->item('base_url'); ?>assets/img/a-locator_logo.png" width="32"> А-локатор</h2></p>
+	   		</div>
+			<?php $attributes = array('class' => 'form-signin pagination-centered'); echo form_open("auth/registration", $attributes);?>
+			
+			<div class="row">
+			  <div class="centered-pills">
 				<ul class="nav nav-pills">
 					<li>
 				    	<a href="login">Вход</a>
 					</li>
 					<li class="active">
-				  		<a href="#">Регистрация</a>
+				  		<a href="registration">Регистрация</a>
 			  		</li>
 				</ul>
-			</p>
-	        <input type="text" class="input-block-level" placeholder="Электропочта">
-	        <input type="password" class="input-block-level" placeholder="Пароль">
-	        <input type="password" class="input-block-level" placeholder="Инвайт">
-        	<button class="btn btn-large btn-primary" type="submit">Войти</button>
-		</form>
-
+			  </div>
+			</div>
+			<p>
+		      	<label for="email">Электропочта:</label>
+		      	<?php echo form_input($email);?>
+			</p>      
+			<p>
+	      		<label for="password">Пароль:</label>
+	      		<?php echo form_input($password);?>
+	      	</p>
+			<p>
+	      		<label for="invite">Код приглашения:</label>
+	      		<?php echo form_input($invite);?>
+	      	</p>
+			<p><?php $attributes = array('class' => 'btn btn-large btn-primary'); echo form_submit($attributes, 'Зарегистрироваться', 'submit');?></p>
+    		<?php echo form_close();?>
     </div>
-
-
-	 
     <script src="<?php echo $this->config->item('base_url'); ?>assets/js/jquery-latest.js"></script>
     <script src="<?php echo $this->config->item('base_url'); ?>assets/js/bootstrap.min.js"></script>
   </body>

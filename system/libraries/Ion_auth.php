@@ -355,6 +355,81 @@ class Ion_auth
 			return FALSE;
 		}
 	}
+	
+	/**
+	 * register by invites
+	 *
+	 * @return void
+	 * @author An-3
+	 **/
+	public function register_by_invites($password, $email, $invite) 
+	{
+		$email_activation = $this->ci->config->item('email_activation', 'ion_auth');
+	
+		if (!$email_activation)
+		{
+			$id = $this->ci->ion_auth_model->register($username, $password, $email, $additional_data, $group_name);
+			if ($id !== FALSE)
+			{
+				$this->set_message('account_creation_successful');
+				return $id;
+			}
+			else
+			{
+				$this->set_error('account_creation_unsuccessful');
+				return FALSE;
+			}
+		}
+		else
+		{
+			$id = $this->ci->ion_auth_model->register($username, $password, $email, $additional_data, $group_name);
+	
+			if (!$id)
+			{
+				$this->set_error('account_creation_unsuccessful');
+				return FALSE;
+			}
+	
+			$deactivate = $this->ci->ion_auth_model->deactivate($id);
+	
+			if (!$deactivate)
+			{
+				$this->set_error('deactivate_unsuccessful');
+				return FALSE;
+			}
+	
+			$activation_code = $this->ci->ion_auth_model->activation_code;
+			$identity        = $this->ci->config->item('identity', 'ion_auth');
+			$user            = $this->ci->ion_auth_model->get_user($id)->row();
+	
+			$data = array(
+					'identity'   => $user->{$identity},
+					'id'         => $user->id,
+					'email'      => $email,
+					'activation' => $activation_code,
+			);
+	
+			$message = $this->ci->load->view($this->ci->config->item('email_templates', 'ion_auth').$this->ci->config->item('email_activate', 'ion_auth'), $data, true);
+	
+			$this->ci->email->clear();
+			$config['mailtype'] = $this->ci->config->item('email_type', 'ion_auth');
+			$this->ci->email->initialize($config);
+			$this->ci->email->set_newline("\r\n");
+			$this->ci->email->from($this->ci->config->item('admin_email', 'ion_auth'), $this->ci->config->item('site_title', 'ion_auth'));
+			$this->ci->email->to($email);
+			$this->ci->email->subject($this->ci->config->item('site_title', 'ion_auth') . ' - Account Activation');
+			$this->ci->email->message($message);
+	
+			if ($this->ci->email->send() == TRUE)
+			{
+				$this->set_message('activation_email_successful');
+				return $id;
+			}
+	
+			$this->set_error('activation_email_unsuccessful');
+			return FALSE;
+		}
+	}
 
 	/**
 	 * login

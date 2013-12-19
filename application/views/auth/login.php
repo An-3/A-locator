@@ -16,12 +16,17 @@
     </style>
   </head>
   <body>
-    <div class="container">
-		<div class="span12 pagination-centered">
-    		<p><h2><img src="<?php echo $this->config->item('base_url'); ?>assets/img/a-locator_logo.png" width="32"> А-локатор</h2></p>
-   		</div>
-		<form class="form-signin">
-        	<p>
+	<div class="row">
+  		<div id="infoMessage"><?php echo $message;?></div>
+		<br>
+	</div>
+		<div class="container pagination-centered">
+			<div class=" pagination-centered">
+	    		<p><h2><img src="<?php echo $this->config->item('base_url'); ?>assets/img/a-locator_logo.png" width="32"> А-локатор</h2></p>
+	   		</div>
+			<?php $attributes = array('class' => 'form-signin pagination-centered'); echo form_open("auth/login", $attributes);?>
+			<div class="row">
+			  <div class="centered-pills">
 				<ul class="nav nav-pills">
 					<li class="active">
 				    	<a href="#">Вход</a>
@@ -30,18 +35,22 @@
 				  		<a href="registration">Регистрация</a>
 			  		</li>
 				</ul>
-			</p>
-	        <input type="text" class="input-block-level" placeholder="Электропочта">
-	        <input type="password" class="input-block-level" placeholder="Пароль">
-	        <label class="checkbox">
-				<input type="checkbox" value="remember-me"> Помнить меня
-        	</label>
-        	<button class="btn btn-large btn-primary" type="submit">Войти</button>
-		</form>
+			  </div>
+			</div>
+			<p>
+		      	<label for="email">Электропочта:</label>
+		      	<?php echo form_input($email);?>
+			</p>      
+			<p>
+	      		<label for="password">Пароль:</label>
+	      		<?php echo form_input($password);?>
+	      	</p>
+	      	<p>
+				<label for="remember">Помнить меня: <?php echo form_checkbox('remember', '1', FALSE);?></label>
+		  	</p>
+			<p><?php $attributes = array('class' => 'btn btn-large btn-primary'); echo form_submit($attributes, 'Войти', 'submit');?></p>
+    		<?php echo form_close();?>
     </div>
-
-
-	 
     <script src="<?php echo $this->config->item('base_url'); ?>assets/js/jquery-latest.js"></script>
     <script src="<?php echo $this->config->item('base_url'); ?>assets/js/bootstrap.min.js"></script>
   </body>

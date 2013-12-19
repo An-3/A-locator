@@ -12,6 +12,7 @@ class Auth extends Controller {
 		parent::__construct();
 		$this->load->library('ion_auth');
 		$this->load->library('session');
+		$this->load->library('invitation');
 		$this->load->library('form_validation');
 		$this->load->database();
 		$this->load->helper('url');
@@ -41,23 +42,7 @@ class Auth extends Controller {
 		}
 	}
 
-	//register new user
-	function registration()
-	{
-		$this->data['title'] = "Register";
-		
-		if ($this->ion_auth->logged_in())
-		{
-			//already logged in so no need to access this page
-			redirect($this->config->item('base_url'), 'refresh');
-		}
-		
-		//validate form input
-		$this->form_validation->set_rules('email', 'Email Address', 'required|valid_email');
-		$this->form_validation->set_rules('password', 'Password', 'required');
-		
-		$this->load->view('auth/registration');
-	}	
+	
 	
 	//log the user in
 	function login()
@@ -313,6 +298,64 @@ class Auth extends Controller {
 		}
 	}
 
+	
+	//register new user
+	function registration()
+	{
+		$this->data['title'] = "Register";
+	
+		if ($this->ion_auth->logged_in())
+		{
+			//already logged in so no need to access this page
+			redirect($this->config->item('base_url'), 'refresh');
+		}
+	
+		//validate form input
+		$this->form_validation->set_rules('email', 'Email Address', 'required|valid_email');
+		$this->form_validation->set_rules('invite', 'Invite', 'required|xss_clean');
+		$this->form_validation->set_rules('password', 'Password', 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') );
+		
+				
+		if ($this->form_validation->run() == true)
+		{
+			$email = $this->input->post('email');
+			$password = $this->input->post('password');
+			$invite = $this->input->post('invite');
+		}
+		if ($this->form_validation->run() == true && $this->ion_auth->register($password, $email, $invite))
+		{ //check to see if we are creating the user
+			//redirect them back to the admin page
+			$this->session->set_flashdata('message', "Пользователь создан");
+			redirect('auth', 'refresh');
+		}
+		else
+		{ //display the create user form
+		//set the flash data error message if there is one
+		$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+		
+		$this->data['email'] = array('name' => 'email',
+				'id' => 'email',
+				'type' => 'text',
+				'value' => $this->form_validation->set_value('email'),
+		);
+		$this->data['password'] = array('name' => 'password',
+				'id' => 'password',
+				'type' => 'password',
+				'value' => $this->form_validation->set_value('password'),
+		);
+		$this->data['invite'] = array('name' => 'invite',
+				'id' => 'invite',
+				'type' => 'text',
+				'value' => $this->form_validation->set_value('invite'),
+		);
+
+		$this->load->view('auth/registration', $this->data);
+		}		
+		
+		
+		
+	}
+	
 	//create a new user
 	function create_user()
 	{

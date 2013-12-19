@@ -567,6 +567,90 @@ class Ion_auth_model extends CI_Model
 
 	    return $this->db->affected_rows() > 0 ? $id : false;
 	}
+	
+	/**
+	 * register
+	 *
+	 * @return bool
+	 * @author An-3
+	 **/
+	public function register_by_invites($password, $email, $invite)
+	{
+		//checking validness of invite
+		
+		if ($this->identity_column == 'email' && $this->email_check($email))
+		{
+			$this->ion_auth->set_error('account_creation_duplicate_email');
+			return FALSE;
+		}
+		
+		//Creating temporary username
+		$parts = explode("@", $email);
+		$username=$parts[0];
+		// If username is taken, use username1 or username2, etc.
+		for($i = 0; $this->username_check($username); $i++)
+		{
+			if($i > 0)
+			{
+				$username .= $i;
+			}
+		}
+	
+	
+		// IP Address
+		$ip_address = $this->input->ip_address();
+		$salt	= $this->store_salt ? $this->salt() : FALSE;
+		$password	= $this->hash_password($password, $salt);
+	
+		// Users table.
+		$data = array(
+				'username'   => $username,
+				'password'   => $password,
+				'email'      => $email,
+				'group_id'   => '2',
+				'ip_address' => $ip_address,
+				'created_on' => now(),
+				'last_login' => now(),
+				'active'     => 1,
+				'invite'	 => $invite
+		);
+	
+		if ($this->store_salt)
+		{
+			$data['salt'] = $salt;
+		}
+	
+		if($this->ion_auth->_extra_set)
+		{
+			$this->db->set($this->ion_auth->_extra_set);
+		}
+	
+		$this->db->insert($this->tables['users'], $data);
+	
+		// Meta table.
+		$id = $this->db->insert_id();
+	
+		$data = array($this->meta_join => $id);
+	
+		if (!empty($this->columns))
+		{
+			foreach ($this->columns as $input)
+			{
+				if (is_array($additional_data) && isset($additional_data[$input]))
+				{
+					$data[$input] = $additional_data[$input];
+				}
+				elseif ($this->input->post($input))
+				{
+					$data[$input] = $this->input->post($input);
+				}
+			}
+		}
+	
+		$this->db->insert($this->tables['meta'], $data);
+	
+		return $this->db->affected_rows() > 0 ? $id : false;
+	}
 
 	/**
 	 * login
@@ -1105,10 +1189,9 @@ class Ion_auth_model extends CI_Model
 					'value'  => $salt,
 					'expire' => $this->config->item('user_expire', 'ion_auth'),
 					));
-
 			return TRUE;
 	    }
-
 	    return FALSE;
 	}
+
 }
