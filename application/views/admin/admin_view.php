@@ -8,27 +8,23 @@
     <link href="<?php echo $this->config->item('base_url'); ?>assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo $this->config->item('base_url'); ?>assets/css/bootstrap-switch.css" rel="stylesheet">
     <link href="<?php echo $this->config->item('base_url'); ?>assets/css/bootstrap-multiselect.css" rel="stylesheet">
-    <link href="<?php echo $this->config->item('base_url'); ?>assets/css/slider.css" rel="stylesheet">
     <link href="<?php echo $this->config->item('base_url'); ?>assets/css/daterangepicker-bs2.css" rel="stylesheet">
-    <link href="<?php echo $this->config->item('base_url'); ?>assets/css/general.css" rel="stylesheet">
-    <link href="<?php echo $this->config->item('base_url'); ?>assets/css/jquery.fileupload.css" rel="stylesheet">	
+    <link href="<?php echo $this->config->item('base_url'); ?>assets/css/general.css" rel="stylesheet">	
+
+    <link href="<?php echo $this->config->item('base_url'); ?>assets/css/jslider.plastic.css" rel="stylesheet">
+    
     
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
 	
 	<script src="<?php echo $this->config->item('base_url'); ?>assets/js/jquery-latest.js"></script>
-	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
-    <script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/markerwithlabel.js"></script>
-	<script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/google_maps.js"></script>
 	<script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/bootstrap-multiselect.js"></script>
-	<script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/bootstrap-slider.js"></script>
 	<script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/daterangepicker.js"></script>
 	<script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/moment.min.js"></script>
 	<script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/jquery.bootstrap-growl.js"></script>
     <script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/jquery.ui.widget.js"></script>	
-	<script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/jquery.fileupload.js"></script>
-	<script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/jquery.fileupload-process.js"></script>
-	<script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/jquery.iframe-transport.js"></script>
+	
+	<script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/jquery.slider.js"></script>	
 	
   </head>
   <body>
@@ -38,15 +34,17 @@
 				<a class="brand"><img src="<?php echo $this->config->item('base_url'); ?>assets/img/a-locator_logo.png" width="18"> А-локатор</a>
 				<ul class="nav">
 					<li class="divider-vertical"></li>
-					<li><a href="#">Все друзья</a></li>
-					<li><a href="#">История</a></li>
+					<li><a href="<?php ?>">Пользователи</a></li>
+					<li><a href="<?php echo $this->config->item('base_url')."index.php/admin/invites" ?>">Инвайты</a></li>
+					<li><a href="#">Лог</a></li>
+					
 				</ul>
 				<ul class="nav pull-right">
 					<?php
 						if ($group_id == 1)
 						{
-							$link = $this->config->item('base_url')."index.php/admin";
-							echo "<li><a href=".$link.">Админ</a></li>";
+							$link = $this->config->item('base_url')."index.php/home";
+							echo "<li><a href=".$link.">Карта</a></li>";
 						}
 					?>
 					<li><a><?php
@@ -71,7 +69,7 @@
 			</nav>
 		</div>
 	</div>
-    <div id="map-canvas"></div>
+    <div id="content"></div>
 	<div id="settings-modal" class="modal hide fade">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -291,6 +289,6 @@
 	<script src="<?php echo $this->config->item('base_url'); ?>assets/js/jasny-bootstrap.min.js"></script>
     <script src="<?php echo $this->config->item('base_url'); ?>assets/js/bootstrap.min.js"></script>
     <script src="<?php echo $this->config->item('base_url'); ?>assets/js/bootstrap-switch.js"></script>
-    <script src="<?php echo $this->config->item('base_url'); ?>assets/js/home_view.js"></script>
+    <script src="<?php echo $this->config->item('base_url'); ?>assets/js/admin_view.js"></script>
 </body>
 </html>

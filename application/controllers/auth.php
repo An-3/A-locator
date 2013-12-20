@@ -448,13 +448,13 @@ class Auth extends Controller {
 			$this->load->view('auth/create_user', $this->data);
 		}
 	}
-
 	
 	function delete_user()
 	{
 		$id = $this->session->userdata('id');
 		$this->ion_auth->delete_user($id);
 		$this->ion_auth->logout();
+		redirect('auth/login', 'refresh');		
 	}
 	
 	function _get_csrf_nonce()
