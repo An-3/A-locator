@@ -80,6 +80,11 @@ $('#button-settings').on('click', function (e, data) {
 	 get_settings();
 });
 
+//Delete user
+$('#delete_user').on('click', function (e, data) {
+	delete_user();
+});
+
  //Change switches
  $('.label-toggle-switch').on('switch-change', function (e, data) {
 		var type = "switch";
@@ -159,7 +164,7 @@ $('#button-settings').on('click', function (e, data) {
      $.ajax({
     	    url: "http://"+ location.hostname + "/index.php/settings/get",
     	    dataType : "json",
-    	    success: function (data, textStatus) { // вешаем свой обработчик на функцию success
+    	    success: function (data, textStatus) { 
     		     switches.forEach(function(entry) {
     			     value = data[entry];
     			        if (value == 0)
@@ -223,4 +228,26 @@ $('#button-settings').on('click', function (e, data) {
 	 //set userpic
 	 //alert("heer");
 	 $("#active_user").attr("src","http://"+ location.hostname + "/assets/img/userpics/default.png");
+ }
+ 
+ function delete_user() {
+	 $.ajax({
+	     type: "POST",
+	     url: "http://"+ location.hostname + "/index.php/auth/delete_user",
+	     data: "" ,
+	     success: function(msg, status){
+    	     $.bootstrapGrowl(msg, { type: 'success',
+	    	     ele: 'body', 
+	    	     align: 'center',
+	    	     delay: 300
+	    	    	 });
+	     },
+	     error: function (msg, status){
+    	     $.bootstrapGrowl(msg, { type: 'error',
+	    	     ele: 'body', 
+	    	     align: 'center',
+	    	     delay: 4000
+	    	    	 });
+	     }
+	});	 
  }

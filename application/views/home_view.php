@@ -35,14 +35,22 @@
   	<div>
 		<div class="navbar">
 			<nav class="navbar-inner">
-				<a class="brand"><img src="<?php echo $this->config->item('base_url'); ?>assets/img/a-locator_logo.png" width="32"> А-локатор</a>
+				<a class="brand"><img src="<?php echo $this->config->item('base_url'); ?>assets/img/a-locator_logo.png" width="18"> А-локатор</a>
 				<ul class="nav">
 					<li class="divider-vertical"></li>
 					<li><a href="#">Все друзья</a></li>
 					<li><a href="#">История</a></li>
 				</ul>
 				<ul class="nav pull-right">
-					<li><a>Бобошко Андрей</a></li>
+					<li><a><?php
+								if ($first_name == "" or $last_name == "")
+								{
+									echo $username;
+								} else {
+									echo $first_name." ".$last_name;
+								}
+							?>
+					</a></li>
 					<li class="divider-vertical"></li>
 					<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-cog"></i> <b class="caret"></b></a>
@@ -167,7 +175,7 @@
 								Компания:	
 							</div>
 							<div class="span1">
-								<input plac type="text" value="обновляется..." class='input_edit' name='company' id="company" readonly="readonly">
+								<input plac type="text" value="" class='input_edit' name='company' id="company" readonly="readonly">
 							</div>
 						</div>
 						<div class="row">
@@ -175,7 +183,7 @@
 								<p>Телефон:</p>	
 							</div>
 							<div class="span1">
-								<p><input type="text" value="обновляется..." class='input_edit' name='phone' id="phone" readonly="readonly"></p>	
+								<p><input type="text" value="" class='input_edit' name='phone' id="phone" readonly="readonly"></p>	
 							</div>
 						</div>
 						<div class="row">
@@ -183,7 +191,7 @@
 								<p>Слоган:</p>	
 							</div>
 							<div class="span1">
-								<p><input type="text" value="обновляется..." class='input_edit' name='slogan' id="slogan" readonly="readonly"></p>
+								<p><input type="text" value="" class='input_edit' name='slogan' id="slogan" readonly="readonly"></p>
 							</div>
 						</div>
 						<div class="row">
@@ -191,7 +199,7 @@
 								<p>Э-почта:</p>	
 							</div>
 							<div class="span1">
-								<p><input type="text" value="обновляется..." class='input_edit' name='email' id='email' readonly="readonly"></p>	
+								<p><input type="text" value="" class='input_edit' name='email' id='email' readonly="readonly"></p>	
 							</div>
 						</div>
 					</div>
@@ -203,7 +211,7 @@
 								<p>Ник:</p>	
 							</div>
 							<div class="span1">
-								<p><input type="text" value="обновляется..." class='input_edit' name='username' id='username' readonly="readonly"></p>	
+								<p><input type="text" value="" class='input_edit' name='username' id='username' readonly="readonly"></p>	
 							</div>
 						</div>
 						<div class="row">
@@ -211,7 +219,7 @@
 								<p>Имя:</p>	
 							</div>
 							<div class="span1">
-								<p><input type="text" value="обновляется..." class='input_edit' name='first_name' id='first_name' readonly="readonly"></p>
+								<p><input type="text" value="" class='input_edit' name='first_name' id='first_name' readonly="readonly"></p>
 							</div>
 						</div>
 						<div class="row">
@@ -219,7 +227,7 @@
 								<p>Фамилия:</p>	
 							</div>
 							<div class="span1">
-								<p><input type="text" value="обновляется..." class='input_edit' name='last_name' id='last_name' readonly="readonly"></p>
+								<p><input type="text" value="" class='input_edit' name='last_name' id='last_name' readonly="readonly"></p>
 							</div>
 						</div>
 						<div class="row" align="right">
@@ -237,7 +245,7 @@
 						</div>
 						<div class="row">
 							<div class="span4">
-								<p><button class="btn pull-right">Удалить аккаунт</button></p>	
+								<p><button id="delete_user" class="btn pull-right">Удалить аккаунт</button></p>	
 							</div>
 						</div>
 					</div>

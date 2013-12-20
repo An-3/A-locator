@@ -11,6 +11,7 @@ class Home extends CI_Controller {
 	
 	public function index()
 	{
-		$this->load->view('home_view');
+		$user = $this->ion_auth->get_user();
+		$this->load->view('home_view', $user);
 	}
 }

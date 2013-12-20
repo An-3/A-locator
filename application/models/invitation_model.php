@@ -48,7 +48,7 @@ class Invitation_model extends CI_Model
 	 */
 	public function attach_invite($invite, $user=1)
 	{
-		$sql = "INSERT INTO `invites` (`id` ,`invite_text` ,`uid_user` ,`uid_invited_user` ,`state`) VALUES (NULL, '".$invite."', '".$user."', NULL, '1');";
+		//$sql = "INSERT INTO `invites` (`id` ,`invite_text` ,`uid_user` ,`uid_invited_user` ,`state`) VALUES (NULL, '".$invite."', '".$user."', NULL, '1');";
 		$data = array(
 				'invite_text' => $invite ,
 				'uid_user' => $user
@@ -67,22 +67,43 @@ class Invitation_model extends CI_Model
 	 * @author An-3
 	 *
 	 */
-	private function check_unique_invite($invite)
+	public function check_invite($invite)
 	{
 		if (empty($invite))
 		{
 			return FALSE;
 		}
-		//select invite
+		//$query = $this->db->get_where('invites', array('invite_text' => $invite, 'state' => $title));
+		
+		//$this->db->select('invite_text, state');
+		
 		$query = $this->db->get_where('invites', array('invite_text' => $invite));
-		//$sql = "SELECT invite_text FROM invites WHERE invite_text = ".$invite;
-		//$query = $this->db->query($sql);
-		if ($query->num_rows() > 0)
-		{
+		
+		//there is no invites
+		if ($query->num_rows() == 0)
+		{			
+			$this->ion_auth->set_error('invite_absent');
 			return false;
 		} else {
-			return true;
+			$row = $query->row();
+			//invite was used
+			if ($row->state == 0) {
+				$this->ion_auth->set_error('invite_was_used');
+				return false;
+			} else {
+				return true;
+			}
 		}
 	}	
 	
+	public function use_invite($user, $invite)
+	{
+		$data = array(
+				'uid_invited_user' => $user,
+				'state' => '0'
+		);
+		$this->db->where('invite_text', $invite);
+		$this->db->update('invites', $data);
+		return true;
+	}
 }

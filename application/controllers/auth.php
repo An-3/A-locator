@@ -322,7 +322,7 @@ class Auth extends Controller {
 			$password = $this->input->post('password');
 			$invite = $this->input->post('invite');
 		}
-		if ($this->form_validation->run() == true && $this->ion_auth->register($password, $email, $invite))
+		if ($this->form_validation->run() == true && $this->ion_auth->register_by_invites($password, $email, $invite))
 		{ //check to see if we are creating the user
 			//redirect them back to the admin page
 			$this->session->set_flashdata('message', "Пользователь создан");
@@ -449,6 +449,14 @@ class Auth extends Controller {
 		}
 	}
 
+	
+	function delete_user()
+	{
+		$id = $this->session->userdata('id');
+		$this->ion_auth->delete_user($id);
+		$this->ion_auth->logout();
+	}
+	
 	function _get_csrf_nonce()
 	{
 		$this->load->helper('string');

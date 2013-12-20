@@ -29,7 +29,7 @@ class Invitation {
 		$unique = false;
 		while (!$unique) {
 			$invite = $this->generateRandomString();
-			if ($this->ci->invitation_model->check_unique_invite($invite))
+			if ($this->check_invite($invite))
 			{
 				$unique = true;
 			}
@@ -62,8 +62,21 @@ class Invitation {
 		return $randomString;
 	}
 
-	public function use_invite($invite, $user)
+	
+	
+	public function use_invite($user, $invite)
 	{
+		//check invite state
+		if (!$this->ci->invitation_model->check_invite($invite))
+		{
+			return false;
+		}
+		return $this->ci->invitation_model->use_invite($user, $invite);
 		
+	}
+	
+	public function check_invite($invite)
+	{
+		return $this->ci->invitation_model->check_invite($invite);
 	}
 }

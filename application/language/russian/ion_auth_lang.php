@@ -19,8 +19,12 @@
 // Account Creation
 $lang['account_creation_successful'] 	  	 = 'Учетная запись успешно создана';
 $lang['account_creation_unsuccessful'] 	 	 = 'Невозможно создать учетную запись';
-$lang['account_creation_duplicate_email'] 	 = 'Электронная почта используется или некорректна';
-$lang['account_creation_duplicate_username'] 	 = 'Имя пользователя существует или некорректно';
+$lang['account_creation_duplicate_email'] 	 = 'Такая электропочта уже используется';
+$lang['account_creation_duplicate_username'] = 'Имя пользователя существует или некорректно';
+
+//Invitation
+$lang['invite_was_used']					= 'Приглашение уже было использовано';
+$lang['invite_absent']						= 'Нет такого приглашения';
 
 // Password
 $lang['password_change_successful'] 	 	 = 'Пароль успешно изменен';
@@ -38,7 +42,7 @@ $lang['activation_email_unsuccessful']   	 = 'Сообщение об актив
 
 // Login / Logout
 $lang['login_successful'] 		  	 = 'Авторизация прошла успешно';
-$lang['login_unsuccessful'] 		  	 = 'Логин не верен';
+$lang['login_unsuccessful'] 		  	 = 'Нет такой учетной записи';
 $lang['logout_successful'] 		 	 = 'Выход успешный';
 
 // Account Changes

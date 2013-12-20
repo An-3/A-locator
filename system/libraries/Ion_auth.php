@@ -89,6 +89,7 @@ class Ion_auth
 		$this->ci->load->config('ion_auth', TRUE);
 		$this->ci->load->library('email');
 		$this->ci->load->library('session');
+		$this->ci->load->library('invitation');
 		$this->ci->lang->load('ion_auth');
 		$this->ci->load->model('ion_auth_model');
 		$this->ci->load->helper('cookie');
@@ -365,17 +366,37 @@ class Ion_auth
 	public function register_by_invites($password, $email, $invite) 
 	{
 		$email_activation = $this->ci->config->item('email_activation', 'ion_auth');
-	
+		$parts = explode("@", $email);
+		$potential_username = $parts[0];
+		
 		if (!$email_activation)
 		{
-			$id = $this->ci->ion_auth_model->register($username, $password, $email, $additional_data, $group_name);
-			if ($id !== FALSE)
+			//get user by email
+
+			//check username uniqueness
+			/*
+			$unique = false;
+			while (!$unique) {
+				$invite = $this->ci->invitation->generate_invite();
+				if ($this->ci->invitation->check_invite($invite))
+				{
+					$unique = true;
+				}
+			}
+			*/
+			
+			//
+			$state = $this->ci->invitation->check_invite($invite);
+			if ($state !== FALSE)
 			{
-				$this->set_message('account_creation_successful');
+				$id = $this->ci->ion_auth_model->register($potential_username, $password, $email);
+				//$this->set_message('account_creation_successful');
+				$this->ci->invitation->use_invite($id, $invite);
 				return $id;
 			}
 			else
 			{
+				
 				$this->set_error('account_creation_unsuccessful');
 				return FALSE;
 			}

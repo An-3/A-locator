@@ -17,10 +17,13 @@
   </head>
   <body>
 	<div class="row">
-		<div id="infoMessage"><?php echo $message;?></div>
+		
 		<br>
 	</div>
 		<div class="container pagination-centered">
+			<div class="alert alert-block <?php echo $message ? '': 'invisible';?>">
+				<div id="infoMessage"><?php echo $message;?></div>
+			</div>
 			<div class=" pagination-centered">
 	    		<p><h2><img src="<?php echo $this->config->item('base_url'); ?>assets/img/a-locator_logo.png" width="32"> А-локатор</h2></p>
 	   		</div>
