@@ -1,3 +1,4 @@
+
 <div class="container">
 	<div class="row">
 		<div class="span8">
@@ -29,7 +30,14 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="span5">
+		<div class="span4">
+			<div class="layout">
+				<div class="layout-slider">
+					<input id="SliderSingle" type="slider" name="price" value="20" />
+				</div>
+			</div>
+		</div>
+		<div class="span7">
 			Для:
 			<select class="multiselect" multiple="multiple">
 			  <option value="cheese">Вася Пупкин</option>
@@ -40,39 +48,6 @@
 			  <option value="onions">Мертвая рука Атредисов</option>
 			</select>
 		</div>
-		<div class="span5">
-		
-			<input id="SliderSingle" type="slider" name="price" value="22.5" style="display: none;">
-			<span class="jslider jslider_round jslider-single">
-				<table>
-					<tbody>
-						<tr>
-							<td>
-								<div class="jslider-bg">
-									<i class="l"></i>
-									<i class="r"></i>
-									<i class="v"></i>
-								</div>
-								<div class="jslider-pointer" style="left: 36.9%; z-index: 2;"></div>
-								<div class="jslider-pointer jslider-pointer-to"></div>
-								<div class="jslider-label"><span>5,0</span></div>
-								<div class="jslider-label jslider-label-to">
-									<span>50,0</span>&nbsp;€
-								</div>
-								<div class="jslider-value" style="left: 36.9%; margin-left: -15px; right: auto;">
-									<span>22,5</span>&nbsp;€
-								</div>
-								<div class="jslider-value jslider-value-to">
-									<span></span>&nbsp;€
-								</div>
-								<div class="jslider-scale"></div>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</span>
-			<br>
-			<br>
-		</div>
+
 	</div>
 </div>

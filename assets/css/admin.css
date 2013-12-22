@@ -1,0 +1,5 @@
+@CHARSET "UTF-8";
+.layout { padding: 0px; margin-top:5px; font-family: Georgia, serif; }
+.layout-slider { margin-bottom: 60px; width: 100%; }
+.layout-slider-settings { font-size: 12px; padding-bottom: 10px; }
+.layout-slider-settings pre { font-family: Courier; }

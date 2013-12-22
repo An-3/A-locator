@@ -9,8 +9,10 @@
     <link href="<?php echo $this->config->item('base_url'); ?>assets/css/bootstrap-switch.css" rel="stylesheet">
     <link href="<?php echo $this->config->item('base_url'); ?>assets/css/bootstrap-multiselect.css" rel="stylesheet">
     <link href="<?php echo $this->config->item('base_url'); ?>assets/css/daterangepicker-bs2.css" rel="stylesheet">
-    <link href="<?php echo $this->config->item('base_url'); ?>assets/css/general.css" rel="stylesheet">	
+    <link href="<?php echo $this->config->item('base_url'); ?>assets/css/general.css" rel="stylesheet">
+    <link href="<?php echo $this->config->item('base_url'); ?>assets/css/admin.css" rel="stylesheet">
 
+    <link href="<?php echo $this->config->item('base_url'); ?>assets/css/jslider.css" rel="stylesheet">
     <link href="<?php echo $this->config->item('base_url'); ?>assets/css/jslider.plastic.css" rel="stylesheet">
     
     
@@ -24,8 +26,14 @@
 	<script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/jquery.bootstrap-growl.js"></script>
     <script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/jquery.ui.widget.js"></script>	
 	
-	<script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/jquery.slider.js"></script>	
 	
+	<script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/jshashtable-2.1_src.js"></script>
+	<script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/jquery.numberformatter-1.2.3.js"></script>
+	<script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/tmpl.js"></script>
+	<script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/jquery.dependClass-0.1.js"></script>
+	<script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/draggable-0.1.js"></script>
+	<script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/jquery.slider.js"></script>	
+			
   </head>
   <body>
   	<div>
