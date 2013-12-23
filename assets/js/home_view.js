@@ -3,6 +3,28 @@ $(document).ready(function() {
       includeSelectAllOption: true
     });
 
+    $("#history_period").slider({
+    	from: 0,
+    	to: 60,
+    	step: 1,
+    	round: 1,
+    	format: { format: '##', locale: 'ru' },
+    	dimension: '&nbsp;мин',
+    	skin: "plastic",
+    	scale: [0, 10, 20, 30, 40, 50, 60],
+    		});
+
+    $("#history_frequency").slider({
+    	from: 0,
+    	to: 60,
+    	step: 1,
+    	round: 1,
+    	format: { format: '##', locale: 'ru' },
+    	dimension: '&nbsp;мин',
+    	skin: "plastic",
+    	scale: [0, 10, 20, 30, 40, 50, 60],
+    		});
+    
     $('#clear_userpic').on('click', function (e, data) {
    	 clear_userpic();
    });
@@ -84,6 +106,8 @@ $('#button-settings').on('click', function (e, data) {
 $('#delete_user').on('click', function (e, data) {
 	delete_user();
 });
+
+
 
  //Change switches
  $('.label-toggle-switch').on('switch-change', function (e, data) {
@@ -251,3 +275,4 @@ $('#delete_user').on('click', function (e, data) {
 	     }
 	});	 
  }
+ 

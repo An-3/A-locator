@@ -126,8 +126,8 @@
             // possible options: 'text', 'value', 'both'
             filterBehavior: 'text',
             preventInputChangeEvent: false,
-            nonSelectedText: 'None selected',
-            nSelectedText: 'selected',
+            nonSelectedText: 'Никого',
+            nSelectedText: 'выбрано',
             numberDisplayed: 3
         },
         

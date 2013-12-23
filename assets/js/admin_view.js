@@ -1,4 +1,5 @@
 $(document).ready(function() {
+	
     $('.multiselect').multiselect({
         includeSelectAllOption: true
       });
@@ -12,4 +13,10 @@ $(document).ready(function() {
     	skin: "plastic",
     	scale: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
     		});
+
+
+    
+    $("#SliderSingle").change(function() {
+    	console.log($("#SliderSingle").slider("value"));
+    	});
 });

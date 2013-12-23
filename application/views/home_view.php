@@ -12,6 +12,8 @@
     <link href="<?php echo $this->config->item('base_url'); ?>assets/css/daterangepicker-bs2.css" rel="stylesheet">
     <link href="<?php echo $this->config->item('base_url'); ?>assets/css/general.css" rel="stylesheet">
     <link href="<?php echo $this->config->item('base_url'); ?>assets/css/jquery.fileupload.css" rel="stylesheet">	
+    <link href="<?php echo $this->config->item('base_url'); ?>assets/css/jslider.css" rel="stylesheet">
+    <link href="<?php echo $this->config->item('base_url'); ?>assets/css/jslider.plastic.css" rel="stylesheet">
     
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
@@ -29,6 +31,12 @@
 	<script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/jquery.fileupload.js"></script>
 	<script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/jquery.fileupload-process.js"></script>
 	<script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/jquery.iframe-transport.js"></script>
+	<script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/jshashtable-2.1_src.js"></script>
+	<script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/jquery.numberformatter-1.2.3.js"></script>
+	<script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/tmpl.js"></script>
+	<script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/jquery.dependClass-0.1.js"></script>
+	<script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/draggable-0.1.js"></script>
+	<script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/jquery.slider.js"></script>		
 	
   </head>
   <body>
@@ -110,12 +118,13 @@
 				        </div>
 						<div class="span4">
 							<p>
-								Временно на
+								Временно на:
 							</p>
-							<input type="text" id="hide_period_slider" class="span2" value="" data-slider-min="1" data-slider-max="60" data-slider-step="1" data-slider-value="-14" data-slider-orientation="horizontal" data-slider-selection="after"data-slider-tooltip="hide">
-							<br>
-							<br>
-							<input type="text" id="hide_period"> мин
+							<div class="layout">
+								<div class="layout-slider">
+									<input id="history_period" type="slider" name="price" value="20" />
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -127,6 +136,7 @@
 						        <input type="checkbox"/>
 						    </div>
 						</div>
+
 						<div class="span4">
 				        	<p>
 				        		Очистить историю за период
@@ -149,7 +159,11 @@
 					</div>
 					<div class="row">
 						<div class="span4">
-								
+							<div class="layout">
+								<div class="layout-slider">
+									<input id="history_frequency" type="slider" name="price" value="20" />
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>

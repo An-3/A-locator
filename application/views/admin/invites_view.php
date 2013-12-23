@@ -37,7 +37,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="span7">
+		<div class="span6">
 			Для:
 			<select class="multiselect" multiple="multiple">
 			  <option value="cheese">Вася Пупкин</option>
@@ -47,6 +47,9 @@
 			  <option value="pepperoni">Правосудия</option>
 			  <option value="onions">Мертвая рука Атредисов</option>
 			</select>
+		</div>
+		<div class="span1">
+			<button class="btn">Создать</button>
 		</div>
 
 	</div>
