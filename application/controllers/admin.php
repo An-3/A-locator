@@ -20,7 +20,11 @@ class Admin extends CI_Controller {
 	
 	public function invites()
 	{
+		//get users
+		$data = array(
+	        'users' => $this->ion_auth->get_users_array('members', null, null)
+	    );
 		$this->load->view('admin/admin_view', $this->user);
-		$this->load->view('admin/invites_view');
+		$this->load->view('admin/invites_view', $data);
 	}
 }

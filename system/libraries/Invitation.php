@@ -24,27 +24,36 @@ class Invitation {
 	 * @param number $num
 	 * @return string $invite
 	 */
-	public function generate_invite()
+	public function generate_invites($num = 1)
 	{
-		$unique = false;
-		while (!$unique) {
-			$invite = $this->generateRandomString();
-			if ($this->check_invite($invite))
-			{
-				$unique = true;
+		$invites = array();
+		for ($i = 1; $i >= $num; $i++)
+		{
+			$unique = false;
+			while (!$unique) {
+				$invite = $this->generateRandomString();
+				if ($this->check_invite($invite))
+				{
+					$unique = true;
+				}
 			}
+			array_push($invites, $invite);
 		}
-		return $invite;
+		return $invites;
 	}
 	
 	/**
-	 * Generating new invite and attach it in db for selected user
+	 * Adding user with his invites in DB 
 	 * 
-	 * @param number $user
+	 * @param array $data — $user_id => $number_of_invites
 	 */
-	public function add_invite($user)
+	public function add_invites($data)
 	{
-		return $this->ci->invitation_model->attach_invite($this->generate_invite());
+		foreach ($data as $key => $value)
+		{
+			
+		}
+		return $this->ci->invitation_model->add_invites($data);
 	}
 	
 	/**

@@ -1,4 +1,3 @@
-
 <div class="container">
 	<div class="row">
 		<div class="span8">
@@ -25,7 +24,7 @@
 	<div class="row">
 		<div class="alert">
 			<div id="invite_info">
-				Выберите, пожалуйста, кол-во приглашений и пользователей, после этого нажмите «Создать».
+				Выберите, пожалуйста, пользователей и кол-во приглашений, после этого нажмите «Создать».
 			</div>
 		</div>
 	</div>
@@ -40,12 +39,22 @@
 		<div class="span6">
 			Для:
 			<select class="multiselect" multiple="multiple">
-			  <option value="cheese">Вася Пупкин</option>
-			  <option value="tomatoes">Меня самого</option>
-			  <option value="mozarella">Его Величества</option>
-			  <option value="mushrooms">Око Саурона</option>
-			  <option value="pepperoni">Правосудия</option>
-			  <option value="onions">Мертвая рука Атредисов</option>
+				<?php
+					foreach ($users as $user)
+					{
+						$val_id = $user['id'];
+						if (!$user['first_name'] && !$user['last_name'])
+						{
+							$delimeter = "";
+						} else {
+							$delimeter = " — ";
+						}
+							
+						$val_text = $user['first_name']." ".$user['last_name'].$delimeter.$user['username'];
+						$element = "<option value=".$val_id.">".$val_text."</option>";
+						echo $element."\n"; 
+					}
+				?>
 			</select>
 		</div>
 		<div class="span1">
