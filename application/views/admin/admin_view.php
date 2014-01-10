@@ -15,6 +15,11 @@
     <link href="<?php echo $this->config->item('base_url'); ?>assets/css/jslider.css" rel="stylesheet">
     <link href="<?php echo $this->config->item('base_url'); ?>assets/css/jslider.plastic.css" rel="stylesheet">
     
+    <link href="<?php echo $this->config->item('base_url'); ?>assets/css/theme.bootstrap.css" rel="stylesheet">
+    <link href="<?php echo $this->config->item('base_url'); ?>assets/css/theme.grey.css" rel="stylesheet">
+    <link href="<?php echo $this->config->item('base_url'); ?>assets/css/theme.blue.css" rel="stylesheet">
+    <link href="<?php echo $this->config->item('base_url'); ?>assets/css/theme.green.css" rel="stylesheet">
+    
     
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
@@ -32,7 +37,10 @@
 	<script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/tmpl.js"></script>
 	<script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/jquery.dependClass-0.1.js"></script>
 	<script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/draggable-0.1.js"></script>
-	<script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/jquery.slider.js"></script>	
+	<script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/jquery.slider.js"></script>
+	
+	<script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/jquery.tablesorter.min.js"></script>	
+	<script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/jquery.tablesorter.widgets.min.js"></script>		
 			
   </head>
   <body>
