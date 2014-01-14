@@ -1,63 +1,96 @@
-    /*
-    Include the maps javascript with sensor=true because this code is using a
-    sensor (a GPS locator) to determine the user's location.
-    See: https://developers.google.com/maps/documentation/javascript/tutorial#Loading_the_Maps_API
-    */
-	// Note: This example requires that you consent to location sharing when
-	// prompted by your browser. If you see a blank space instead of the map, this
-	// is probably because you have denied permission for location sharing.
-	
-	var map;
-	
-	function initialize() {
-	  var myLatlng = new google.maps.LatLng(49.363882,35.044922);
-	  var mapOptions = {
-	    zoom: 6,
-	    center: myLatlng,
-	    mapTypeId: google.maps.MapTypeId.ROADMAP
-	  };
-	  map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-	  // Try HTML5 geolocation
-	  if(navigator.geolocation) {
-	    navigator.geolocation.getCurrentPosition(function(position) {
-	      var pos = new google.maps.LatLng(position.coords.latitude,
-	                                       position.coords.longitude);	      
-	      map.setCenter(pos);
-		  var pictureLabel = document.createElement("img");
-		  pictureLabel.id = "active_user";
-		  pictureLabel.width = "42";
-		  pictureLabel.height = "42";
-		  pictureLabel.src = "http://"+ location.hostname + "/assets/img/userpics/default.png";
-		  var marker = new MarkerWithLabel({
-		       position: pos,
-		       map: map,
-		       draggable: false,
-		       raiseOnDrag: true,
-		       labelContent: pictureLabel,
-		       labelAnchor: new google.maps.Point(50, 65),
-		       labelClass: "labels", // the CSS class for the label
-		       labelStyle: {opacity: 1.0}
-		     });		  
-		    }, function() {
-	      handleNoGeolocation(true);
-	    });
-	  } else {
-	    // Browser doesn't support Geolocation
-	    handleNoGeolocation(false);
-	  }
+/*
+ Include the maps javascript with sensor=true because this code is using a
+ sensor (a GPS locator) to determine the user's location.
+ See: https://developers.google.com/maps/documentation/javascript/tutorial#Loading_the_Maps_API
+ */
+// Note: This example requires that you consent to location sharing when
+// prompted by your browser. If you see a blank space instead of the map, this
+// is probably because you have denied permission for location sharing.
+
+var map;
+/**
+ * 
+ * @param {string} filename path to userpic
+ * @returns {Gmap}
+ */
+function Gmap(filename) {
+    
+    this.userpic = filename || "/assets/img/userpics/default.png";
+    this.initialize = function() {
+        var myLatlng = new google.maps.LatLng(49.363882, 35.044922);
+        var mapOptions = {
+            zoom: 6,
+            center: myLatlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+        // Try HTML5 geolocation
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var pos = new google.maps.LatLng(position.coords.latitude,
+                        position.coords.longitude);
+                map.setCenter(pos);
+                var pictureLabel = document.createElement("img");
+                pictureLabel.id = "active_user";
+                pictureLabel.width = "42";
+                pictureLabel.height = "42";
+                
+                pictureLabel.src = "http://" + location.hostname + this.userpic;
+                var marker = new MarkerWithLabel({
+                    position: pos,
+                    map: this.map,
+                    draggable: false,
+                    raiseOnDrag: true,
+                    labelContent: pictureLabel,
+                    labelAnchor: new google.maps.Point(50, 65),
+                    labelClass: "labels", // the CSS class for the label
+                    labelStyle: {opacity: 1.0}
+                });
+            }, function(){
+                handleNoGeolocation(map, true);
+            })
+        } else {
+            // Browser doesn't support Geolocation
+            handleNoGeolocation(map, false);
+        }
+    };
+
+    /**
+     * 
+     * @returns google map object, initialized in initialize
+     */
+    this.initmap = function() {
+        google.maps.event.addDomListener(window, 'load', this.initialize);
+    };
+
+}
+
+ function handleNoGeolocation(map, errorFlag) {
+        if (errorFlag) {
+            var content = 'Error: The Geolocation service failed.';
+        } else {
+            var content = 'Error: Your browser doesn\'t support geolocation.';
+        }
+        var options = {
+            map: map,
+            position: new google.maps.LatLng(60, 105),
+            content: content
+        };
+        map.setCenter(options.position);
+    };
+
+//analog php empty
+function empty(obj) {
+	// null and undefined are empty
+	if (obj == null) return true;
+	// Assume if it has a length property with a non-zero value
+	// that that property is correct.
+	if (obj.length && obj.length > 0)    return false;
+	if (obj.length === 0)  return true;
+
+	for (var key in obj) {
+		if (hasOwnProperty.call(obj, key))    return false;
 	}
-	
-	function handleNoGeolocation(errorFlag) {
-	  if (errorFlag) {
-	    var content = 'Error: The Geolocation service failed.';
-	  } else {
-	    var content = 'Error: Your browser doesn\'t support geolocation.';
-	  }	
-	  var options = {
-	    map: map,
-	    position: new google.maps.LatLng(60, 105),
-	    content: content
-	  };
-	  map.setCenter(options.position);
-	}
-	google.maps.event.addDomListener(window, 'load', initialize);
+
+	return true;
+}
