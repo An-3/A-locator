@@ -46,6 +46,7 @@
             var userpic = "/assets/img/userpics/default.png";
         }
         var myMap = new Gmap(userpic);
+       
         myMap.initmap();
        </script>
   </head>
