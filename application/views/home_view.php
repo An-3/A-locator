@@ -36,8 +36,18 @@
 	<script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/tmpl.js"></script>
 	<script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/jquery.dependClass-0.1.js"></script>
 	<script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/draggable-0.1.js"></script>
-	<script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/jquery.slider.js"></script>		
-	
+	<script type="text/javascript" src="<?php echo $this->config->item('base_url'); ?>assets/js/jquery.slider.js"></script>	
+
+	  <script>
+        var filename = "<?=$userpic;?>";
+        if( !empty(filename) ){
+            var userpic = (filename !== "default.png") ? "/assets/img/userpics/thumbnail/" + filename : "/assets/img/userpics/" + filename;
+        }else{
+            var userpic = "/assets/img/userpics/default.png";
+        }
+        var myMap = new Gmap(userpic);
+        myMap.initmap();
+       </script>
   </head>
   <body>
   	<div>
